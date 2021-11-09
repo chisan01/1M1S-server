@@ -13,10 +13,10 @@ public class MainController {
     private UserRepository userRepository;
 
     @PostMapping(path="/add")
-    public @ResponseBody String addNewUser (@RequestParam String uid, @RequestParam String pwd) {
+    public @ResponseBody String addNewUser (@RequestParam String username, @RequestParam String password) {
         User n = new User();
-        n.setUid(uid);
-        n.setPwd(pwd);
+        n.setUsername(username);
+        n.setPassword(password);
         userRepository.save(n);
         return "Saved";
     }
