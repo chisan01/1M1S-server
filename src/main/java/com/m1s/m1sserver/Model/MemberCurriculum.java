@@ -3,21 +3,22 @@ package com.m1s.m1sserver.Model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-public class User {
+public class MemberCurriculum {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
     private Integer id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     @Getter @Setter
-    private String username;
+    private Member member;
 
+    @OneToMany
+    @JoinColumn(name = "curriculum_id")
     @Getter @Setter
-    private String password;
+    private Curriculum curriculum;
 }

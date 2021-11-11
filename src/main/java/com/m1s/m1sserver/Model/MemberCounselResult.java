@@ -4,9 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-public class UserCurriculum {
+public class MemberCounselResult {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
@@ -14,11 +15,14 @@ public class UserCurriculum {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @Getter @Setter
-    private User user;
+    @Setter @Getter
+    private Member member;
 
-    @OneToMany
-    @JoinColumn(name = "curriculum_id")
+    @ManyToOne
+    @JoinColumn(name = "counsel_solution_id")
     @Getter @Setter
-    private Curriculum curriculum;
+    private CounselSolution counsel_solution;
+
+    @Setter @Getter
+    private LocalDateTime counsel_time;
 }

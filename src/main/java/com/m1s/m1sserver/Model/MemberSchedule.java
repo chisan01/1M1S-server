@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.DateTimeException;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
-public class UserSchedule {
+public class MemberSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
@@ -18,7 +16,7 @@ public class UserSchedule {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @Getter @Setter
-    private User user;
+    private Member member;
 
     @Getter @Setter
     private String content;
