@@ -6,22 +6,26 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-public class GroupMember {
+public class Party {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "group_id")
     @Getter @Setter
-    private Group group;
+    private String name;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "interest_id")
     @Getter @Setter
-    private User user;
+    private Interest interest;
 
     @Getter @Setter
-    private Integer authority;
+    private String goal;
+
+    @Getter @Setter
+    private Integer maximum_number_of_people;
+
+    @Getter @Setter
+    private boolean recruit;
 }

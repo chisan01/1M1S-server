@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-public class Rank {
+public class Ranking {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter

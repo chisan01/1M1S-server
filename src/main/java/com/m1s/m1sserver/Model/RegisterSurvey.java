@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+@Entity
 public class RegisterSurvey {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
