@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class UserCounselResult {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,8 +19,9 @@ public class UserCounselResult {
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "counsel_solution_id")
     @Getter @Setter
-    private CounselResult counsel_result;
+    private CounselSolution counsel_solution;
 
     @Setter @Getter
     private LocalDateTime counsel_time;
