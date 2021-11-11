@@ -15,7 +15,7 @@ public class Ranking {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @Getter @Setter
-    private User user;
+    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "interest_id")

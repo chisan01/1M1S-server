@@ -27,7 +27,7 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @Getter @Setter
-    private User user;
+    private Member member;
 
     @Getter @Setter
     private LocalDateTime writing_date;
