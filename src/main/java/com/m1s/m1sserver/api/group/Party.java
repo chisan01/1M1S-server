@@ -1,6 +1,6 @@
 package com.m1s.m1sserver.api.group;
 
-import com.m1s.m1sserver.api.admin.Interest;
+import com.m1s.m1sserver.api.admin.interest.Interest;
 import lombok.Getter;
 import lombok.Setter;
 

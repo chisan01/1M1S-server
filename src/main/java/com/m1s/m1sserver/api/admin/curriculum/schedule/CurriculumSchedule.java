@@ -1,5 +1,7 @@
-package com.m1s.m1sserver.api.admin;
+package com.m1s.m1sserver.api.admin.curriculum.schedule;
 
+import com.m1s.m1sserver.api.admin.curriculum.Curriculum;
+import com.m1s.m1sserver.api.admin.interest.Interest;
 import lombok.Getter;
 import lombok.Setter;
 

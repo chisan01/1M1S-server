@@ -1,6 +1,5 @@
-package com.m1s.m1sserver.api.admin;
+package com.m1s.m1sserver.api.admin.interest;
 
-import com.m1s.m1sserver.api.admin.Interest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InterestRepository extends JpaRepository<Interest, Long> {

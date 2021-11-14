@@ -1,4 +1,4 @@
-package com.m1s.m1sserver.api.admin;
+package com.m1s.m1sserver.api.admin.counsel_survey;
 
 import lombok.Getter;
 import lombok.Setter;

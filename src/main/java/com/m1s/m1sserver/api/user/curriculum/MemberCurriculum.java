@@ -1,6 +1,6 @@
 package com.m1s.m1sserver.api.user.curriculum;
 
-import com.m1s.m1sserver.api.admin.Curriculum;
+import com.m1s.m1sserver.api.admin.curriculum.Curriculum;
 import com.m1s.m1sserver.api.user.Member;
 import lombok.Getter;
 import lombok.Setter;

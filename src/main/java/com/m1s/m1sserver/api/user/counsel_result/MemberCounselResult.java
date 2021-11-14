@@ -1,6 +1,6 @@
 package com.m1s.m1sserver.api.user.counsel_result;
 
-import com.m1s.m1sserver.api.admin.CounselSolution;
+import com.m1s.m1sserver.api.admin.counsel_solution.CounselSolution;
 import com.m1s.m1sserver.api.user.Member;
 import lombok.Getter;
 import lombok.Setter;

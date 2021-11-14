@@ -1,5 +1,6 @@
-package com.m1s.m1sserver.api.admin;
+package com.m1s.m1sserver.api.admin.register_survey;
 
+import com.m1s.m1sserver.api.admin.interest.Interest;
 import lombok.Getter;
 import lombok.Setter;
 

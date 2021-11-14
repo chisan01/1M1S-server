@@ -1,7 +1,6 @@
 package com.m1s.m1sserver.api.user.interest;
 
-import com.m1s.m1sserver.api.admin.InterestRepository;
-import com.m1s.m1sserver.api.user.Member;
+import com.m1s.m1sserver.api.admin.interest.InterestRepository;
 import com.m1s.m1sserver.api.user.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
