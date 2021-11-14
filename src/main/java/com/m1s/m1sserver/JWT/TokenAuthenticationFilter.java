@@ -1,7 +1,7 @@
 //package com.m1s.m1sserver.JWT;
 //
 //import com.m1s.m1sserver.Interface.AuthenticationTokenProvider;
-//import com.m1s.m1sserver.Model.Member;
+//import com.m1s.m1sserver.api.user.Member;
 //import com.m1s.m1sserver.Service.MemberService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
