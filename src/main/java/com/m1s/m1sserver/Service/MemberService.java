@@ -11,7 +11,7 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public Member findById(Integer user_id){
+    public Member findById(Long user_id){
         Optional<Member> result = memberRepository.findById(user_id);
         return result.get();
     }
