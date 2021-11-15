@@ -23,11 +23,13 @@ public class MemberSchedule {
     @Getter @Setter
     private String content;
 
+    @JoinColumn(name = "start_time")
     @Getter @Setter
-    private LocalDateTime start_time;
+    private LocalDateTime startTime;
 
+    @JoinColumn(name = "end_time")
     @Getter @Setter
-    private LocalDateTime end_time;
+    private LocalDateTime endTime;
 
     @Getter @Setter
     private boolean finish;

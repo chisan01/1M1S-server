@@ -24,8 +24,9 @@ public class Party {
     @Getter @Setter
     private String goal;
 
+    @JoinColumn(name = "maximum_number_of_people")
     @Getter @Setter
-    private Integer maximum_number_of_people;
+    private Integer maximumNumberOfPeople;
 
     @Getter @Setter
     private boolean recruit;

@@ -28,6 +28,7 @@ public class Comment {
     @Getter @Setter
     private Member member;
 
+    @JoinColumn(name = "writing_date")
     @Getter @Setter
-    private LocalDateTime writing_date;
+    private LocalDateTime writingDate;
 }

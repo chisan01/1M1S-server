@@ -23,8 +23,9 @@ public class MemberCounselResult {
     @ManyToOne
     @JoinColumn(name = "counsel_solution_id")
     @Getter @Setter
-    private CounselSolution counsel_solution;
+    private CounselSolution counselSolution;
 
+    @JoinColumn(name = "counsel_time")
     @Setter @Getter
-    private LocalDateTime counsel_time;
+    private LocalDateTime counselTime;
 }

@@ -25,14 +25,14 @@ public class MemberInformationController {
         String gender = m.getGender();
         String phone = m.getPhone();
         String email = m.getEmail();
-        LocalDateTime register_date = m.getRegister_date();
+        LocalDateTime register_date = m.getRegisterDate();
 
         if(name != null) edited.setName(name);
         if(nickname != null) edited.setNickname(nickname);
         if(gender != null) edited.setGender(gender);
         if(phone != null) edited.setPhone(phone);
         if(email != null) edited.setEmail(email);
-        if(register_date != null) edited.setRegister_date(register_date);
+        if(register_date != null) edited.setRegisterDate(register_date);
 
         memberInformationRepository.save(edited);
         return edited;

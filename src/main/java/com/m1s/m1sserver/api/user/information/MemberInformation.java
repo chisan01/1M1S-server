@@ -34,6 +34,7 @@ public class MemberInformation {
     @Getter @Setter
     private String email;
 
+    @JoinColumn(name = "register_date")
     @Getter @Setter
-    private LocalDateTime register_date;
+    private LocalDateTime registerDate;
 }
