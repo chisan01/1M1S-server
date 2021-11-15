@@ -32,7 +32,7 @@ public class MemberSchedule {
     private LocalDateTime endTime;
 
     @Getter @Setter
-    private boolean finish;
+    private Boolean finish;
 
     @ManyToOne
     @JoinColumn(name = "interest_id")
