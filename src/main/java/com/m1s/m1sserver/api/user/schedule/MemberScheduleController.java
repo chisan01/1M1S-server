@@ -1,5 +1,6 @@
 package com.m1s.m1sserver.api.user.schedule;
 
+import com.m1s.m1sserver.api.user.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
@@ -9,9 +10,12 @@ import org.springframework.web.bind.annotation.*;
 public class MemberScheduleController {
     @Autowired
     private MemberScheduleRepository memberScheduleRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @PostMapping
     public MemberSchedule addMemberSchedule(@PathVariable long user_id, @RequestBody MemberSchedule m) {
+        m.setMember(memberRepository.findById(user_id).get());
         memberScheduleRepository.save(m);
         return m;
     }
