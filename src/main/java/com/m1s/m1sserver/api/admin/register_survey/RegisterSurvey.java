@@ -19,7 +19,8 @@ public class RegisterSurvey {
     private Interest interest;
 
     @Setter @Getter
-    private Integer problem_number;
+    @JoinColumn(name = "problem_number")
+    private Integer problemNumber;
 
     @Setter @Getter
     private String question;
