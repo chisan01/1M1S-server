@@ -1,12 +1,15 @@
 package com.m1s.m1sserver.api.user.schedule;
 
+import com.m1s.m1sserver.api.admin.enviroment.EnvironmentRepository;
 import com.m1s.m1sserver.api.admin.interest.Interest;
 import com.m1s.m1sserver.api.user.Member;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 public class MemberSchedule {
@@ -38,4 +41,8 @@ public class MemberSchedule {
     @JoinColumn(name = "interest_id")
     @Getter @Setter
     private Interest interest;
+
+    int calScore(String score_per_minute) {
+        return Integer.parseInt(Long.toString(ChronoUnit.MINUTES.between(startTime, endTime))) * Integer.parseInt(score_per_minute);
+    }
 }
