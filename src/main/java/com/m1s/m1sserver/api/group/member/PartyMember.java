@@ -25,5 +25,5 @@ public class PartyMember {
     private Member member;
 
     @Getter @Setter
-    private Integer authority;
+    private String authority;
 }

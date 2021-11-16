@@ -29,5 +29,5 @@ public class Party {
     private Integer maximumNumberOfPeople;
 
     @Getter @Setter
-    private boolean recruit;
+    private Boolean recruit;
 }
