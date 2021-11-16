@@ -12,8 +12,9 @@ public class CounselSurvey {
     @Getter @Setter
     private Long id;
 
+    @JoinColumn(name = "problem_number")
     @Setter @Getter
-    private Integer problem_number;
+    private Integer problemNumber;
 
     @Setter @Getter
     private String question;
