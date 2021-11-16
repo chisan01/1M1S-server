@@ -5,5 +5,5 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberScheduleRepository extends JpaRepository<MemberSchedule, Long> {
-    Iterable<MemberSchedule> findAllByMemberId(long user_id, Sort sort);
+    Iterable<MemberSchedule> findAllByMemberId(Long user_id, Sort sort);
 }

@@ -13,7 +13,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "post_id")

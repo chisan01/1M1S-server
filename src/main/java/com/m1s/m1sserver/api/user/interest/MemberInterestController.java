@@ -17,7 +17,7 @@ public class MemberInterestController {
     private MemberRepository memberRepository;
 
     @PostMapping
-    public @ResponseBody MemberInterest addMemberInterest(@PathVariable long user_id, @RequestParam long interest_id, @RequestParam Integer level) {
+    public @ResponseBody MemberInterest addMemberInterest(@PathVariable Long user_id, @RequestParam Long interest_id, @RequestParam Integer level) {
         MemberInterest m = new MemberInterest();
         m.setMember(memberRepository.findById(user_id).get());
         m.setInterest(interestRepository.findById(interest_id).get());
@@ -27,12 +27,12 @@ public class MemberInterestController {
     }
 
     @GetMapping
-    public @ResponseBody Iterable<MemberInterest> getMemberInterests(@PathVariable long user_id) {
+    public @ResponseBody Iterable<MemberInterest> getMemberInterests(@PathVariable Long user_id) {
         return memberInterestRepository.findAllByMemberId(user_id);
     }
 
     @PutMapping("/{member_interest_id}")
-    public @ResponseBody MemberInterest editMemberInterest(@PathVariable long member_interest_id, @RequestParam Integer level) {
+    public @ResponseBody MemberInterest editMemberInterest(@PathVariable Long member_interest_id, @RequestParam Integer level) {
         MemberInterest m = memberInterestRepository.findById(member_interest_id).get();
         if(level != null) m.setLevel(level);
         memberInterestRepository.save(m);
@@ -40,7 +40,7 @@ public class MemberInterestController {
     }
 
     @DeleteMapping("/{member_interest_id}")
-    public @ResponseBody MemberInterest delMemberInterest(@PathVariable long member_interest_id) {
+    public @ResponseBody MemberInterest delMemberInterest(@PathVariable Long member_interest_id) {
         MemberInterest m = memberInterestRepository.findById(member_interest_id).get();
         memberInterestRepository.deleteById(member_interest_id);
         return m;

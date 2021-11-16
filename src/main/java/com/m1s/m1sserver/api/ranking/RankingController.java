@@ -10,16 +10,17 @@ public class RankingController {
     private RankingRepository rankingRepository;
 
     @GetMapping
-    public long getRanking(@RequestParam long user_id, @RequestParam long interest_id) {
+    public Long getRanking(@RequestParam Long user_id, @RequestParam Long interest_id) {
         return rankingRepository.getRank(user_id, interest_id);
     }
 
-    @PutMapping
-    public void setRanking() {
-        Iterable<Ranking> rs = rankingRepository.findAll();
-        for(Ranking s : rs) {
-            s.setScore(0);
-            rankingRepository.save(s);
-        }
-    }
+    // put은 나중에 admin에서 관리
+//    @PutMapping
+//    public void setRanking() {
+//        Iterable<Ranking> rs = rankingRepository.findAll();
+//        for(Ranking s : rs) {
+//            s.setScore(0);
+//            rankingRepository.save(s);
+//        }
+//    }
 }

@@ -14,7 +14,7 @@ public class RegisterSurveyController {
     private RegisterSurveyRepository registerSurveyRepository;
 
     @GetMapping
-    public Iterable<RegisterSurvey> getRegisterSurvey(@RequestParam long interest_id) {
+    public Iterable<RegisterSurvey> getRegisterSurvey(@RequestParam Long interest_id) {
         return registerSurveyRepository.findAllByInterestId(interest_id, Sort.by("problemNumber"));
     }
 }

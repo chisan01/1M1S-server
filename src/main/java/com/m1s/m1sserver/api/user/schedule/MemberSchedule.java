@@ -16,7 +16,7 @@ public class MemberSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

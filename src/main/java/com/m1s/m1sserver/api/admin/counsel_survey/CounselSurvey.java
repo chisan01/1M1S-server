@@ -10,7 +10,7 @@ public class CounselSurvey {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
-    private long id;
+    private Long id;
 
     @Setter @Getter
     private Integer problem_number;

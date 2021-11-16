@@ -18,12 +18,12 @@
 //    }
 //
 //    @GetMapping
-//    public Iterable<RegisterSurvey> getRegisterSurvey(@RequestParam long interest_id) {
+//    public Iterable<RegisterSurvey> getRegisterSurvey(@RequestParam Long interest_id) {
 //        return registerSurveyRepository.findAllByInterestId(interest_id, Sort.by("problemNumber"));
 //    }
 //
 //    @PutMapping("/{register_survey_id}")
-//    public RegisterSurvey editRegisterSurvey(@PathVariable long register_survey_id, @RequestBody RegisterSurvey r) {
+//    public RegisterSurvey editRegisterSurvey(@PathVariable Long register_survey_id, @RequestBody RegisterSurvey r) {
 //        RegisterSurvey edit = registerSurveyRepository.findById(register_survey_id).get();
 //
 //        if(r.getInterest() != null) edit.setInterest(r.getInterest());
@@ -36,7 +36,7 @@
 //    }
 //
 //    @DeleteMapping("/{register_survey_id}")
-//    public RegisterSurvey delRegisterSurvey(@PathVariable long register_survey_id) {
+//    public RegisterSurvey delRegisterSurvey(@PathVariable Long register_survey_id) {
 //        RegisterSurvey r = registerSurveyRepository.findById(register_survey_id).get();
 //        registerSurveyRepository.deleteById(register_survey_id);
 //        return r;

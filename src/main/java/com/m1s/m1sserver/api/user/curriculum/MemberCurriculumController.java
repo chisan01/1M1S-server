@@ -20,7 +20,7 @@ public class MemberCurriculumController {
     private CurriculumRepository curriculumRepository;
 
     @PostMapping
-    public @ResponseBody MemberCurriculum addMemberCurriculum(@PathVariable long user_id, @RequestParam long curriculum_id) {
+    public @ResponseBody MemberCurriculum addMemberCurriculum(@PathVariable Long user_id, @RequestParam Long curriculum_id) {
         MemberCurriculum m = new MemberCurriculum();
         m.setMember(memberRepository.findById(user_id).get());
         m.setCurriculum(curriculumRepository.findById(curriculum_id).get());
@@ -29,12 +29,12 @@ public class MemberCurriculumController {
     }
 
     @GetMapping
-    public @ResponseBody Iterable<MemberCurriculum> getMemberCurriculum(@PathVariable long user_id) {
+    public @ResponseBody Iterable<MemberCurriculum> getMemberCurriculum(@PathVariable Long user_id) {
         return memberCurriculumRepository.findAllByMemberId(user_id);
     }
 
     @DeleteMapping("/{member_curriculum_id}")
-    public @ResponseBody MemberCurriculum delMemberCurriculum(@PathVariable long member_curriculum_id) {
+    public @ResponseBody MemberCurriculum delMemberCurriculum(@PathVariable Long member_curriculum_id) {
         MemberCurriculum m = memberCurriculumRepository.findById(member_curriculum_id).get();
         memberCurriculumRepository.deleteById(member_curriculum_id);
         return m;

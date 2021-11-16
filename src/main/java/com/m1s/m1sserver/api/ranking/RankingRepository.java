@@ -11,7 +11,7 @@ public interface RankingRepository extends JpaRepository<Ranking, Long> {
             "DENSE_RANK() over ( ORDER BY score DESC ) as rank\n" +
             "FROM ranking WHERE interest_id = ?2\n" +
             ") AS r WHERE member_id = ?1", nativeQuery = true)
-    long getRank(long user_id, long interest_id);
+    Long getRank(Long user_id, Long interest_id);
 
-    Ranking findByMemberIdAndInterestId(long user_id, long interest_id);
+    Ranking findByMemberIdAndInterestId(Long user_id, Long interest_id);
 }

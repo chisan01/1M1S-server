@@ -21,7 +21,7 @@ public class MemberScheduleController {
     private EnvironmentRepository environmentRepository;
 
     @PostMapping
-    public MemberSchedule addMemberSchedule(@PathVariable long user_id, @RequestBody MemberSchedule m) {
+    public MemberSchedule addMemberSchedule(@PathVariable Long user_id, @RequestBody MemberSchedule m) {
         m.setMember(memberRepository.findById(user_id).get());
         m.setFinish(false);
         memberScheduleRepository.save(m);
@@ -29,12 +29,12 @@ public class MemberScheduleController {
     }
 
     @GetMapping
-    public Iterable<MemberSchedule> getMemberSchedule(@PathVariable long user_id) {
+    public Iterable<MemberSchedule> getMemberSchedule(@PathVariable Long user_id) {
         return memberScheduleRepository.findAllByMemberId(user_id, Sort.by("startTime"));
     }
 
     @PutMapping("/{member_schedule_id}")
-    public MemberSchedule editMemberSchedule(@PathVariable long user_id, @PathVariable long member_schedule_id, @RequestBody MemberSchedule m) {
+    public MemberSchedule editMemberSchedule(@PathVariable Long user_id, @PathVariable Long member_schedule_id, @RequestBody MemberSchedule m) {
         MemberSchedule edit = memberScheduleRepository.findById(member_schedule_id).get();
         Ranking r = rankingRepository.findByMemberIdAndInterestId(user_id, edit.getInterest().getId());
         final String score_per_minute = environmentRepository.findByName("score_per_minute").getValue();
@@ -81,7 +81,7 @@ public class MemberScheduleController {
     }
 
     @DeleteMapping("/{member_schedule_id}")
-    public MemberSchedule delMemberSchedule(@PathVariable long user_id, @PathVariable long member_schedule_id) {
+    public MemberSchedule delMemberSchedule(@PathVariable Long user_id, @PathVariable Long member_schedule_id) {
         final String score_per_minute = environmentRepository.findByName("score_per_minute").getValue();
         MemberSchedule m = memberScheduleRepository.findById(member_schedule_id).get();
         if (m.getFinish().equals(true)) {

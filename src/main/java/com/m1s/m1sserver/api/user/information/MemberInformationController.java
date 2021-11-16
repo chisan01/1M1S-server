@@ -13,12 +13,12 @@ public class MemberInformationController {
     private MemberInformationRepository memberInformationRepository;
 
     @GetMapping
-    public @ResponseBody MemberInformation getMemberInformation(@PathVariable long user_id) {
+    public @ResponseBody MemberInformation getMemberInformation(@PathVariable Long user_id) {
         return memberInformationRepository.findByMemberId(user_id);
     }
 
     @PutMapping
-    public @ResponseBody MemberInformation editMemberInformation(@PathVariable long user_id, @RequestBody MemberInformation m) {
+    public @ResponseBody MemberInformation editMemberInformation(@PathVariable Long user_id, @RequestBody MemberInformation m) {
         MemberInformation edited = memberInformationRepository.findByMemberId(user_id);
 
         String name = m.getName();
