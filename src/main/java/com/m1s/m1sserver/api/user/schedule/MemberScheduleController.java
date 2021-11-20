@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @RestController
 @RequestMapping("/api/user/{user_id}/schedule")
 public class MemberScheduleController {
@@ -29,8 +33,10 @@ public class MemberScheduleController {
     }
 
     @GetMapping
-    public Iterable<MemberSchedule> getMemberSchedule(@PathVariable Long user_id) {
-        return memberScheduleRepository.findAllByMemberId(user_id, Sort.by("startTime"));
+    public Iterable<MemberSchedule> getMemberSchedule(@PathVariable Long user_id, @RequestParam String search_time) {
+        LocalDateTime t = LocalDate.parse(search_time, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+        return memberScheduleRepository.findAllByMemberIdAndStartTime(user_id, t.getYear(),
+                t.getMonthValue(), t.getDayOfMonth());
     }
 
     @PutMapping("/{member_schedule_id}")
