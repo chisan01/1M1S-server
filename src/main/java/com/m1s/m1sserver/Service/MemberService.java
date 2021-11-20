@@ -1,7 +1,7 @@
 package com.m1s.m1sserver.Service;
 
-import com.m1s.m1sserver.Model.Member;
-import com.m1s.m1sserver.Repository.MemberRepository;
+import com.m1s.m1sserver.api.user.Member;
+import com.m1s.m1sserver.api.user.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
