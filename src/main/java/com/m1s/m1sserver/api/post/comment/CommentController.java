@@ -15,6 +15,6 @@ public class CommentController {
 
     @GetMapping
     public Iterable<Comment> getComment(@PathVariable Long post_id) {
-        return commentRepository.findByPostId(post_id, Sort.by(Sort.Direction.DESC, "writingDate"));
+        return commentRepository.findByPostId(post_id, Sort.by("writingDate"));
     }
 }
