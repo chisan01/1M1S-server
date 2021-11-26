@@ -14,6 +14,11 @@ public class RankingController {
         return rankingRepository.getRank(user_id, interest_id);
     }
 
+    @GetMapping("/top3")
+    public Iterable<Ranking> getTopRankings(@RequestParam Long interest_id) {
+        return rankingRepository.getTopRankings(interest_id);
+    }
+
     // put은 나중에 admin에서 관리
 //    @PutMapping
 //    public void setRanking() {
