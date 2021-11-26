@@ -1,43 +1,54 @@
 package com.m1s.m1sserver.api.group.member;
 
+import com.m1s.m1sserver.api.group.Party;
+import com.m1s.m1sserver.api.group.PartyService;
 import com.m1s.m1sserver.api.group.member.PartyMember;
 import com.m1s.m1sserver.api.group.member.PartyMemberRepository;
 import com.m1s.m1sserver.api.post.Post;
+import com.m1s.m1sserver.auth.AuthService;
+import com.m1s.m1sserver.auth.member.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user/group/{group_id}/member")
 public class PartyMemberController {
     @Autowired
-    PartyMemberRepository partyMemberRepository;
+    private PartyMemberRepository partyMemberRepository;
+
+    @Autowired
+    private AuthService authService;
+
+    @Autowired
+    private PartyMemberService partyMemberService;
+
+    @Autowired
+    private PartyService partyService;
 
     @GetMapping
-    public ResponseEntity<Iterable<PartyMember>> getGroupMember(@PathVariable Long user_id, @PathVariable Long group_id) {
-        PartyMember p = partyMemberRepository.findByMemberIdAndPartyId(user_id, group_id);
-        if(p == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        if(p.getAuthority().equals("승인대기")) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(partyMemberRepository.findAllByPartyId(group_id), HttpStatus.OK);
+    public Iterable<PartyMember> getGroupMembers(Authentication authentication, @PathVariable Long group_id) {
+        Member me = authService.getMe(authentication);
+        Party party = partyService.getParty(group_id);
+        PartyMember partyMember = partyMemberService.getPartyMember(me, party);
+        return partyMemberService.getPartyMembers(party);
     }
 
     @PutMapping("/{member_id}")
-    public ResponseEntity<PartyMember> editGroupMember(@PathVariable Long user_id, @PathVariable Long group_id, @PathVariable Long member_id, @RequestParam String authority) {
-        PartyMember p = partyMemberRepository.findByMemberIdAndPartyId(user_id, group_id);
-        if(!p.getAuthority().equals("그룹장")) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        PartyMember m = partyMemberRepository.findById(member_id).get();
-        m.setAuthority(authority);
-        partyMemberRepository.save(m);
-        return new ResponseEntity<>(m, HttpStatus.OK);
+    public PartyMember editGroupMember(Authentication authentication, @PathVariable Long group_id, @PathVariable Long member_id, @RequestParam String authority) {
+        Member me = authService.getMe(authentication);
+        Party party = partyService.getParty(group_id);
+        PartyMember partyMember = partyMemberService.getPartyMember(me, party);
+        return partyMemberService.editPartyMember(partyMember, party, authority);
     }
 
-    @DeleteMapping("/{member_id}")
-    public ResponseEntity<PartyMember> delGroupMember(@PathVariable Long user_id, @PathVariable Long group_id, @PathVariable Long member_id) {
-        PartyMember p = partyMemberRepository.findByMemberIdAndPartyId(user_id, group_id);
-        if(!p.getAuthority().equals("그룹장")) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        PartyMember m = partyMemberRepository.findById(member_id).get();
-        partyMemberRepository.deleteById(member_id);
-        return new ResponseEntity<>(m, HttpStatus.OK);
+    @DeleteMapping("/{party_member_id}")
+    public void deleteGroupMember(Authentication authentication, @PathVariable Long group_id, @PathVariable Long party_member_id) {
+        Member me = authService.getMe(authentication);
+        Party party = partyService.getParty(group_id);
+        PartyMember partyMemberMe = partyMemberService.getPartyMember(me, party);
+        partyMemberService.deletePartyMember(partyMemberMe, party_member_id, party);
     }
 }

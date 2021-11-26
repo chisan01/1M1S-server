@@ -55,8 +55,8 @@ public class MemberInformationService {
         return memberInformationRepository.save(memberInformation);
     }
     public MemberInformation getMemberInfo(Member member){
-        if(!memberInformationRepository.existsByMemberId(member.getId()))throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
-        return memberInformationRepository.findByMemberId(member.getId());
+        if(!memberInformationRepository.existsByMember(member))throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+        return memberInformationRepository.findByMember(member);
     }
 
     public void deleteMemberInformation(Member member){

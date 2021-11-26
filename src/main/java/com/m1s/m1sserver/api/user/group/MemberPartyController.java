@@ -57,29 +57,32 @@ public class MemberPartyController {
 
     @PutMapping("/{group_id}")
     public Party editParty(Authentication authentication, @PathVariable Long group_id, @RequestBody Party inputParty) {
-        Long myId = authService.getMyId(authentication);
-        PartyMember me = partyMemberService.getPartyMember(myId, group_id);
+        Member me = authService.getMe(authentication);
+        Party party = partyService.getParty(group_id);
+        PartyMember partyMemberMe = partyMemberService.getPartyMember(me, party);
         Party targetParty = partyService.getParty(group_id);
-        targetParty = partyService.editParty(me, targetParty, inputParty);
+        targetParty = partyService.editParty(partyMemberMe, targetParty, inputParty);
         return targetParty;
     }
 
     @DeleteMapping("/{group_id}")
     public Party deleteParty(Authentication authentication, @PathVariable Long group_id) {
-        Long myId = authService.getMyId(authentication);
-        PartyMember me = partyMemberService.getPartyMember(myId, group_id);
+        Member me = authService.getMe(authentication);
+        Party party = partyService.getParty(group_id);
+        PartyMember partyMemberMe = partyMemberService.getPartyMember(me, party);
         Party targetParty = partyService.getParty(group_id);
-        partyService.deleteParty(me, targetParty);
+        partyService.deleteParty(partyMemberMe, targetParty);
         return targetParty;
     }
 
 
     @DeleteMapping("/{group_id}/leave")
     public Party leaveParty(Authentication authentication, @PathVariable Long group_id){
-        Long myId = authService.getMyId(authentication);
-        PartyMember me = partyMemberService.getPartyMember(myId, group_id);
+        Member me = authService.getMe(authentication);
+        Party party = partyService.getParty(group_id);
+        PartyMember partyMemberMe = partyMemberService.getPartyMember(me, party);
         Party targetParty = partyService.getParty(group_id);
-        partyMemberService.deletePartyMember(me);
+        partyMemberService.deletePartyMember(partyMemberMe.getId());
         return targetParty;
     }
 }

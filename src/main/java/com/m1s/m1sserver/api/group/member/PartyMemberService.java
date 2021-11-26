@@ -2,6 +2,7 @@ package com.m1s.m1sserver.api.group.member;
 
 
 import com.m1s.m1sserver.api.group.Party;
+import com.m1s.m1sserver.api.group.PartyService;
 import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.utils.CustomException;
 import com.m1s.m1sserver.utils.ErrorCode;
@@ -13,6 +14,9 @@ public class PartyMemberService {
     @Autowired
     private PartyMemberRepository partyMemberRepository;
 
+    @Autowired
+    private PartyService partyService;
+
     public PartyMember createPartyMember(Member member, Party party, String authority){
         return save(PartyMember.builder()
                 .party(party)
@@ -21,27 +25,32 @@ public class PartyMemberService {
                 .build());
     }
 
-    public PartyMember getPartyMember(Long user_id, Long group_id){
-        if(!partyMemberRepository.existsByMemberIdAndPartyId(user_id, group_id))
-            throw new CustomException(ErrorCode.PARTICIPANT_NOT_FOUND);
-        return partyMemberRepository.findByMemberIdAndPartyId(user_id, group_id);
+    public PartyMember editPartyMember(PartyMember partyMember, Party party, String authority){
+        partyService.checkOwner(partyMember, party);
+        partyMember.setAuthority(authority);
+        return partyMemberRepository.save(partyMember);
     }
 
-    public Iterable<PartyMember> getPartyMembers(Long group_id){
-        return partyMemberRepository.findAllByPartyId(group_id);
+    public PartyMember getPartyMember(Member member, Party party){
+        if(!partyMemberRepository.existsByMemberAndParty(member, party))
+            throw new CustomException(ErrorCode.PARTICIPANT_NOT_FOUND);
+        return partyMemberRepository.findByMemberAndParty(member, party);
+    }
+    public PartyMember getPartyMember(Long party_member_id){
+        if(!partyMemberRepository.existsById(party_member_id))throw new CustomException(ErrorCode.PARTICIPANT_NOT_FOUND);
+        return partyMemberRepository.findById(party_member_id).get();
+    }
+    public Iterable<PartyMember> getPartyMembers(Party party){
+        return partyMemberRepository.findAllByParty(party);
     }
 
     public void deletePartyMembers(Party party){
-        partyMemberRepository.deleteAllByPartyId(party.getId());
+        partyMemberRepository.deleteAllByParty(party);
     }
 
-    public void deletePartyMembers(Long group_id){
-        partyMemberRepository.deleteAllByPartyId(group_id);
-    }
-
-    public void deletePartyMember(PartyMember partyMember){
-        if(partyMember.getAuthority().equals("그룹장"))throw new CustomException(ErrorCode.LEADER_CANT_LEAVE);
-        deletePartyMember(partyMember.getId());
+    public void deletePartyMember(PartyMember requester, Long target_id, Party party){
+        partyService.checkOwner(requester, party);
+        deletePartyMember(target_id);
     }
 
     public void deletePartyMember(Long party_member_id){
@@ -50,7 +59,7 @@ public class PartyMemberService {
     }
 
     public void deletePartyMembers(Member member){
-        partyMemberRepository.deleteAllByMemberId(member.getId());
+        partyMemberRepository.deleteAllByMember(member);
     }
     public PartyMember save(PartyMember partyMember){
         return partyMemberRepository.save(partyMember);

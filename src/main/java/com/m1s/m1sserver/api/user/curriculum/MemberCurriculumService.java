@@ -30,8 +30,8 @@ public class MemberCurriculumService {
                 .build();
     }
 
-    public Iterable<MemberCurriculum> getMemberCurriculums(Long user_id){
-        return memberCurriculumRepository.findAllByMemberId(user_id);
+    public Iterable<MemberCurriculum> getMemberCurriculums(Member member){
+        return memberCurriculumRepository.findAllByMember(member);
     }
 
     public MemberCurriculum getMemberCurriculum(Long member_curriculum_id){
@@ -50,7 +50,7 @@ public class MemberCurriculumService {
     }
 
     public void deleteMemberCurriculums(Member member){
-        memberCurriculumRepository.deleteAllByMemberId(member.getId());
+        memberCurriculumRepository.deleteAllByMember(member);
     }
     public MemberCurriculum save(MemberCurriculum memberCurriculum){
         return memberCurriculumRepository.save(memberCurriculum);

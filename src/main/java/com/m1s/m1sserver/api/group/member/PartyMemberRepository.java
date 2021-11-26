@@ -1,11 +1,13 @@
 package com.m1s.m1sserver.api.group.member;
 
+import com.m1s.m1sserver.api.group.Party;
+import com.m1s.m1sserver.auth.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PartyMemberRepository extends JpaRepository<PartyMember, Long> {
-    PartyMember findByMemberIdAndPartyId(Long user_id, Long group_id);
-    Boolean existsByMemberIdAndPartyId(Long user_id, Long group_id);
-    Iterable<PartyMember> findAllByPartyId(Long group_id);
-    void deleteAllByPartyId(Long group_id);
-    void deleteAllByMemberId(Long user_id);
+    PartyMember findByMemberAndParty(Member member, Party group);
+    Boolean existsByMemberAndParty(Member member, Party group);
+    Iterable<PartyMember> findAllByParty(Party group);
+    void deleteAllByParty(Party group);
+    void deleteAllByMember(Member member);
 }

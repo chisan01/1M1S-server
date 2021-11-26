@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 @Service
@@ -35,9 +38,13 @@ public class MemberScheduleService {
     }
 
     public Iterable<MemberSchedule> getMemberSchedules(Member member){
-        return memberScheduleRepository.findAllByMemberId(member.getId(), Sort.by("startTime"));
+        return memberScheduleRepository.findAllByMember(member, Sort.by("startTime"));
     }
-
+    public Iterable<MemberSchedule> getMemberSchedules(Member member, String search_time){
+        LocalDateTime t = LocalDate.parse(search_time, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
+        return memberScheduleRepository.findAllByMemberAndStartTime(member, t.getYear(),
+                t.getMonthValue(), t.getDayOfMonth());
+    }
     public MemberSchedule createMemberSchedule(Member member, MemberSchedule memberSchedule){
         checkOwner(member, memberSchedule);
         memberSchedule.setMember(member);
@@ -75,7 +82,7 @@ public class MemberScheduleService {
     }
 
     public void deleteMemberSchedules(Member member){
-        memberScheduleRepository.deleteAllByMemberId(member.getId());
+        memberScheduleRepository.deleteAllByMember(member);
     }
 
     public MemberSchedule save(MemberSchedule memberSchedule){

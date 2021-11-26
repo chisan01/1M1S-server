@@ -67,7 +67,8 @@ public class PartyService {
 
     public void deleteParty(Long group_id){
         if(!partyRepository.existsById(group_id))throw new CustomException(ErrorCode.GROUP_NOT_FOUND);
-        partyMemberService.deletePartyMembers(group_id);
+        Party party = getParty(group_id);
+        partyMemberService.deletePartyMembers(party);
         partyRepository.deleteById(group_id);
     }
     public Party save(Party targetParty) {

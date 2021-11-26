@@ -1,11 +1,12 @@
 package com.m1s.m1sserver.api.user.counsel_result;
 
+import com.m1s.m1sserver.auth.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberCounselResultRepository extends JpaRepository<MemberCounselResult, Long> {
-    Iterable<MemberCounselResult> findAllByMemberIdOrderByCounselTime(Long user_id);
+    Iterable<MemberCounselResult> findAllByMemberOrderByCounselTime(Member member);
+    MemberCounselResult findByMember(Member member);
     boolean existsById(Long member_counsel_result_id);
-    MemberCounselResult findByResult(String result);
     void deleteById(Long member_counsel_result_id);
-    void deleteAllByMemberId(Long user_id);
+    void deleteAllByMember(Member member);
 }

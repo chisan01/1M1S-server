@@ -39,10 +39,9 @@ public class MemberScheduleController {
 
     @GetMapping
 
-    public Iterable<MemberSchedule> getMemberSchedule(@PathVariable Long user_id, @RequestParam String search_time) {
-        LocalDateTime t = LocalDate.parse(search_time, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay();
-        return memberScheduleRepository.findAllByMemberIdAndStartTime(user_id, t.getYear(),
-                t.getMonthValue(), t.getDayOfMonth());
+    public Iterable<MemberSchedule> getMemberSchedules(Authentication authentication, @RequestParam String search_time) {
+        Member me = authService.getMe(authentication);
+        return memberScheduleService.getMemberSchedules(me, search_time);
     }
 
     @PutMapping("/{member_schedule_id}")

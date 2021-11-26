@@ -5,9 +5,11 @@ import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.utils.CustomException;
 import com.m1s.m1sserver.utils.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+@Service
 public class CounselSolutionService {
     @Autowired
     CounselSolutionRepository counselSolutionRepository;

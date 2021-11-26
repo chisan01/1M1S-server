@@ -53,7 +53,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         String xAccessToken = tokens.get("x-access-token");
         String xRefreshToken = tokens.get("x-refresh-token");
         Long member_id = authenticationTokenProvider.getTokenOwnerNo(xAccessToken);
-        Member member = memberService.findMember(member_id);
+        Member member = memberService.getMember(member_id);
 
         //리프레시토큰이 헤더에 있는 경우에만 토큰 갱신 처리
         //TODO 알아서 처리할것, 이부분은 구현안함

@@ -45,7 +45,7 @@ public class MemberInterestService {
     }
 
     public Iterable<MemberInterest> getMemberInterests(Member member){
-        return memberInterestRepository.findAllByMemberId(member.getId());
+        return memberInterestRepository.findAllByMember(member);
     }
 
     public MemberInterest getMemberInterest(Long member_interest_id){
@@ -63,7 +63,7 @@ public class MemberInterestService {
     }
 
     public void deleteMemberInterests(Member member){
-        memberInterestRepository.deleteAllByMemberId(member.getId());
+        memberInterestRepository.deleteAllByMember(member);
     }
 
 }

@@ -10,6 +10,7 @@ import com.m1s.m1sserver.api.post.Post;
 import com.m1s.m1sserver.api.post.PostRepository;
 import com.m1s.m1sserver.api.post.PostService;
 import com.m1s.m1sserver.auth.AuthService;
+import com.m1s.m1sserver.auth.member.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -38,9 +39,10 @@ public class PartyPostController {
 
     @GetMapping
     public Iterable<Post> getGroupMemberPost(Authentication authentication, @PathVariable Long group_id) {
-        Long user_id = authService.getMyId(authentication);
-        PartyMember me = partyMemberService.getPartyMember(user_id, group_id);
+        Member me = authService.getMe(authentication);
+        Party party = partyService.getParty(group_id);
+        PartyMember partyMemberMe = partyMemberService.getPartyMember(me, party);
         Party targetParty = partyService.getParty(group_id);
-        return postService.getPosts(me, targetParty);
+        return postService.getPosts(partyMemberMe, targetParty);
     }
 }

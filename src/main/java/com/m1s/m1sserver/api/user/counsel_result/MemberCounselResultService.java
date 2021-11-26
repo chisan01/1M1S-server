@@ -22,12 +22,12 @@ public class MemberCounselResultService {
     private AuthService authService;
 
     public Iterable<MemberCounselResult> getMemberCounselResults(Member member){
-        return memberCounselResultRepository.findAllByMemberIdOrderByCounselTime(member.getId());
+        return memberCounselResultRepository.findAllByMemberOrderByCounselTime(member);
     }
 
     public MemberCounselResult getMemberCounselResult(Member member){
         if(!memberCounselResultRepository.existsById(member.getId()))throw new CustomException(ErrorCode.MEMBER_COUNSEL_RESULT_NOT_FOUND);
-        return memberCounselResultRepository.findById(member.getId()).get();
+        return memberCounselResultRepository.findByMember(member);
     }
     public void save(MemberCounselResult memberCounselResult){
         try{
@@ -41,8 +41,8 @@ public class MemberCounselResultService {
     public MemberCounselResult createMemberCounselResult(Member member, CounselSolution counselSolution){
         return MemberCounselResult.builder()
                 .member(member)
-                .counsel_solution(counselSolution)
-                .counsel_time(LocalDateTime.now())
+                .counselSolution(counselSolution)
+                .counselTime(LocalDateTime.now())
                 .build();
     }
 
@@ -59,6 +59,6 @@ public class MemberCounselResultService {
     }
 
     public void deleteMemberCounselResults(Member member){
-        memberCounselResultRepository.deleteAllByMemberId(member.getId());
+        memberCounselResultRepository.deleteAllByMember(member);
     }
 }

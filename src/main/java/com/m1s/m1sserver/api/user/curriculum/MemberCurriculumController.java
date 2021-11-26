@@ -32,8 +32,8 @@ public class MemberCurriculumController {
 
     @GetMapping
     public @ResponseBody Iterable<MemberCurriculum> getMemberCurriculums(Authentication authentication) {
-        Long myId = authService.getMyId(authentication);
-        return memberCurriculumService.getMemberCurriculums(myId);
+        Member me = authService.getMe(authentication);
+        return memberCurriculumService.getMemberCurriculums(me);
     }
 
     @DeleteMapping("/{member_curriculum_id}")
