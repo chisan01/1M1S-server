@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface MemberScheduleRepository extends JpaRepository<MemberSchedule, Long> {
     Iterable<MemberSchedule> findAllByMemberId(Long user_id, Sort sort);
+
+    void deleteAllByMemberId(Long user_id);
+
     @Query(value = "SELECT *\n" +
             "FROM member_schedule\n" +
             "WHERE member_id = ?1\n" +
@@ -15,4 +18,5 @@ public interface MemberScheduleRepository extends JpaRepository<MemberSchedule, 
             "\tAND DAY(start_time)=?4\n" +
             "ORDER BY start_time;", nativeQuery = true)
     Iterable<MemberSchedule> findAllByMemberIdAndStartTime(Long user_id, int year, int month, int day);
+
 }

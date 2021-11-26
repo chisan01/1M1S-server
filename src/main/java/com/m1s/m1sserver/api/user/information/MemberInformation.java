@@ -1,6 +1,6 @@
 package com.m1s.m1sserver.api.user.information;
 
-import com.m1s.m1sserver.api.user.Member;
+import com.m1s.m1sserver.auth.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ public class MemberInformation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
-    private Long id;
+    private long id;
 
     @OneToOne
     @JoinColumn(name = "member_id")
@@ -34,7 +34,8 @@ public class MemberInformation {
     @Getter @Setter
     private String email;
 
-    @JoinColumn(name = "register_date")
     @Getter @Setter
-    private LocalDateTime registerDate;
+    private LocalDateTime register_date;
+
+    public Long getMemberId(){return member.getId();}
 }
