@@ -86,7 +86,6 @@ public class AuthService {
         if(user.getPassword() != encodePassword(password));
     }
     public boolean logout(Member member){
-        refreshTokenService.deleteRefreshToken(member);
         return true;
     }
 

@@ -37,8 +37,9 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public boolean logout(){
-        return authService.logout(userStorage.getMember());
+    public boolean logout(Authentication authentication){
+        Member me = authService.getMe(authentication);
+        return authService.logout(me);
     }
 
 }
