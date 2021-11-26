@@ -2,7 +2,6 @@ package com.m1s.m1sserver.api.user.post;
 
 import com.m1s.m1sserver.api.post.Post;
 import com.m1s.m1sserver.api.post.PostRepository;
-import com.m1s.m1sserver.api.user.Member;
 import com.m1s.m1sserver.api.user.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
