@@ -56,8 +56,13 @@ public class AuthService {
 
     public String encodePassword(String password){return passwordEncoder.encode(password);}
 
-    public MemberInformation join(MemberInformation memberInformation){
-        return memberInformationService.insertMemberInformation(memberInformation);
+    public JoinForm join(JoinForm joinForm){
+        joinForm.setMember
+                (memberService.insertMember(joinForm.getMember()));
+        joinForm.setMemberInformation
+                (memberInformationService.insertMemberInformation
+                        (joinForm.getMemberInformation()));
+        return joinForm;
     }
     public Long getMyId(Authentication authentication){
         return (Long) authentication.getPrincipal();

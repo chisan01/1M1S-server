@@ -5,6 +5,8 @@ import com.m1s.m1sserver.UserStorage;
 import com.m1s.m1sserver.api.user.information.MemberInformation;
 import com.m1s.m1sserver.auth.JWT.AuthenticationToken;
 import com.m1s.m1sserver.auth.member.Member;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +19,10 @@ public class AuthController {
     @Autowired
     UserStorage userStorage;
 
+
     @PostMapping("/join")
-    public MemberInformation join(@RequestBody MemberInformation memberInformation){
-            return authService.join(memberInformation);
+    public JoinForm join(@RequestBody JoinForm joinForm){
+            return authService.join(joinForm);
     }
 
     @DeleteMapping("/me")

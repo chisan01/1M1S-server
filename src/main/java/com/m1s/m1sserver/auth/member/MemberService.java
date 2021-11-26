@@ -59,11 +59,11 @@ public class MemberService {
         if(!memberRepository.existsByUsername(username))throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
         return memberRepository.findOneByUsername(username);
     }
-    public void insertMember(Member member){
+    public Member insertMember(Member member){
         if(memberRepository.existsByUsername(member.getUsername()))
             throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
         member.setPassword(authService.encodePassword(member.getPassword()));
-        memberRepository.save(member);
+        return memberRepository.save(member);
     }
     public void deleteMember(Member member){
         memberRepository.deleteById(member.getId());
