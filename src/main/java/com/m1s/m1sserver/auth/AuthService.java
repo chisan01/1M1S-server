@@ -59,9 +59,12 @@ public class AuthService {
     public String encodePassword(String password){return passwordEncoder.encode(password);}
 
     public MemberInformation join(MemberInformation memberInformation){
-        memberInformation.setMember(memberService.insertMember(memberInformation.getMember()));
-        return memberInformationService.insertMemberInformation(memberInformation);
+        memberInformation = memberInformationService.insertMemberInformation(memberInformation);
+
+        return memberInformation;
     }
+
+
     public Long getMyId(Authentication authentication){
         return (Long) authentication.getPrincipal();
     }
@@ -69,6 +72,8 @@ public class AuthService {
         return memberService.getMember(getMyId(authentication));
     }
     public AuthenticationToken login(Member member){
+        if(member.getUsername().equals(""))throw new CustomException(ErrorCode.NO_USERNAME);
+        if(member.getPassword().equals(""))throw new CustomException(ErrorCode.NO_PASSWORD);
         //refcell22 - 이 로직에 의하면 사용자가 username이 아닌 id까지 알고있어야 로그인이 가능한건데.. 이 구현이 맞나?
         Member foundMember = memberService.loginInformationCheck(member.getUsername(), member.getPassword());
         AuthenticationToken authenticationToken = jwtAuthenticationTokenProvider.issue(member.getId());

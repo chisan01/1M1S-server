@@ -30,6 +30,8 @@ public class MemberInterestController {
         return memberInterestService.createMemberInterest(me, selectedInterest, level);
     }
 
+
+
     @GetMapping
     public @ResponseBody Iterable<MemberInterest> getMemberInterests(Authentication authentication) {
         Member me = authService.getMe(authentication);

@@ -23,8 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private static final String[] PUBLIC_URI = {
-            "/login",
-            "/join"
+            "/auth/**"
     };
 
     @Override

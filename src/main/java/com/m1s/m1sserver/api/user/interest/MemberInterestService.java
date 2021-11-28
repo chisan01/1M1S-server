@@ -17,6 +17,7 @@ public class MemberInterestService {
 
     @Autowired
     private RankingService rankingService;
+
     public MemberInterest createMemberInterest(Member member, Interest interest, Integer level){
         Ranking ranking;
         try {
@@ -32,6 +33,13 @@ public class MemberInterestService {
                 .build());
 
     }
+
+    public MemberInterest createMemberInterest(MemberInterest memberInterest){
+        Ranking ranking;
+        ranking = rankingService.createRanking(memberInterest.getMember(),memberInterest.getInterest());
+        return save(memberInterest);
+    }
+
 
     public boolean checkOwner(Member member, MemberInterest memberInterest){
         if(member.getId() != memberInterest.getMemberId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);

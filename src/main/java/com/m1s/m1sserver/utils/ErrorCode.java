@@ -37,8 +37,14 @@ public enum ErrorCode {
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "중복된 이메일입니다."),
     DUPLICATE_PHONE(HttpStatus.CONFLICT, "중복된 연락처입니다."),
     DUPLICATE_PARTICIPANT(HttpStatus.CONFLICT, "이미 참여중인 회원입니다."),
-    DUPLICATE_PASSWORD(HttpStatus.CONFLICT, "기존 비밀번호와 동일합니다.")
+    DUPLICATE_PASSWORD(HttpStatus.CONFLICT, "기존 비밀번호와 동일합니다."),
 
+    NO_USERNAME(HttpStatus.BAD_REQUEST, "아이디를 입력하세요."),
+    NO_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호를 입력하세요."),
+    NO_EMAIL(HttpStatus.BAD_REQUEST, "이메일을 입력하세요."),
+    NO_NICKNAME(HttpStatus.BAD_REQUEST, "별명을 입력하세요."),
+    NO_PHONE(HttpStatus.BAD_REQUEST, "휴대폰번호를 입력하세요."),
+    NO_NAME(HttpStatus.BAD_REQUEST, "이름를 입력하세요.")
     ;
 
     private final HttpStatus httpStatus;

@@ -2,6 +2,7 @@ package com.m1s.m1sserver.api.user.information;
 
 
 import com.m1s.m1sserver.auth.member.Member;
+import com.m1s.m1sserver.auth.member.MemberRepository;
 import com.m1s.m1sserver.auth.member.MemberService;
 import com.m1s.m1sserver.utils.CustomException;
 import com.m1s.m1sserver.utils.ErrorCode;
@@ -14,15 +15,25 @@ import java.time.LocalDateTime;
 public class MemberInformationService {
     @Autowired
     MemberInformationRepository memberInformationRepository;
-
     @Autowired
     MemberService memberService;
 
+    @Autowired
+    MemberRepository memberRepository;
+
     public MemberInformation insertMemberInformation(MemberInformation memberInformation){
+        if(memberInformation.getEmail().equals(""))throw new CustomException(ErrorCode.NO_EMAIL);
+        if(memberInformation.getNickname().equals(""))throw new CustomException(ErrorCode.NO_NICKNAME);
+        if(memberInformation.getName().equals(""))throw new CustomException(ErrorCode.NO_USERNAME);
         if(memberInformationRepository.existsByEmail(memberInformation.getEmail()))
             throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
-        if(memberInformationRepository.existsByPhone(memberInformation.getPhone()))
-            throw new CustomException(ErrorCode.DUPLICATE_PHONE);
+        if(memberInformation.getMember().getUsername().equals(""))
+            throw new CustomException(ErrorCode.NO_USERNAME);
+        if(memberInformation.getMember().getPassword().equals(""))
+            throw new CustomException(ErrorCode.NO_PASSWORD);
+        if(memberRepository.existsByUsername(memberInformation.getMember().getUsername()))
+            throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
+        memberInformation.setMember(memberService.insertMember(memberInformation.getMember()));
         memberInformation.setRegister_date(LocalDateTime.now());
         memberInformationRepository.save(memberInformation);
         return memberInformation;

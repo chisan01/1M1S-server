@@ -52,7 +52,9 @@ public class MemberService {
         Member member = getMember(username);
         String memberPassword = member.getPassword();
         //refcell22 - Bcrypt 검사는 문자열 비교로 하면 안됨, 반드시 Bcrypt의 비교함수를 사용할것
-        if(!passwordEncoder.matches(inputPassword,memberPassword)) throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
+
+        if(!passwordEncoder.matches(inputPassword,memberPassword))
+            throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
         return member;
     }
     public Member getMember(String username){
@@ -60,8 +62,7 @@ public class MemberService {
         return memberRepository.findOneByUsername(username);
     }
     public Member insertMember(Member member){
-        if(memberRepository.existsByUsername(member.getUsername()))
-            throw new CustomException(ErrorCode.DUPLICATE_USERNAME);
+
         member.setPassword(authService.encodePassword(member.getPassword()));
         return memberRepository.save(member);
     }
