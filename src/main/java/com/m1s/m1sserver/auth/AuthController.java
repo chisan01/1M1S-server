@@ -16,13 +16,12 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-    @Autowired
-    UserStorage userStorage;
+
 
 
     @PostMapping("/join")
-    public JoinForm join(@RequestBody JoinForm joinForm){
-            return authService.join(joinForm);
+    public MemberInformation join(@RequestBody MemberInformation memberInformation){
+            return authService.join(memberInformation);
     }
 
     @DeleteMapping("/me")
@@ -31,7 +30,7 @@ public class AuthController {
         authService.deleteAccount(me);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public AuthenticationToken login(@RequestBody Member member){
         return authService.login(member);
     }

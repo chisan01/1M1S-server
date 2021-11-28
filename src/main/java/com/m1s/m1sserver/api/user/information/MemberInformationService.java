@@ -8,6 +8,8 @@ import com.m1s.m1sserver.utils.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class MemberInformationService {
     @Autowired
@@ -21,7 +23,7 @@ public class MemberInformationService {
             throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         if(memberInformationRepository.existsByPhone(memberInformation.getPhone()))
             throw new CustomException(ErrorCode.DUPLICATE_PHONE);
-        memberService.insertMember(memberInformation.getMember());
+        memberInformation.setRegister_date(LocalDateTime.now());
         memberInformationRepository.save(memberInformation);
         return memberInformation;
     }

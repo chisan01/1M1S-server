@@ -65,7 +65,7 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
     public AuthenticationToken issue(Long user_id){
         return JwtAuthenticationToken.builder()
                 .accessToken(buildToken(user_id,ACCESS_TOKEN_EXPIRATION_MS))
-                .refreshToken(buildToken(null, REFRESH_TOKEN_EXPIRATION_MS))
+                //.refreshToken(buildToken(null, REFRESH_TOKEN_EXPIRATION_MS))
                 .build();
     };
 

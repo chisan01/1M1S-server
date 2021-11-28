@@ -24,7 +24,5 @@ public class ErrorResponse {
                         .code(errorCode.name())
                         .message(errorCode.getDetail())
                         .build());
-
-
     }
 }
