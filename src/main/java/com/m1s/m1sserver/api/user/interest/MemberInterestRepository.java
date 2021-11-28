@@ -1,8 +1,10 @@
 package com.m1s.m1sserver.api.user.interest;
 
 import com.m1s.m1sserver.api.user.interest.MemberInterest;
+import com.m1s.m1sserver.auth.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MemberInterestRepository extends JpaRepository<MemberInterest, Long> {
-    Iterable<MemberInterest> findAllByMemberId(Long user_id);
+    Iterable<MemberInterest> findAllByMember(Member member);
+    void deleteAllByMember(Member member);
 }
