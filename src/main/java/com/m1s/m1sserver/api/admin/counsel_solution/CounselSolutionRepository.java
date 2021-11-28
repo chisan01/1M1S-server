@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 public interface CounselSolutionRepository extends JpaRepository<CounselSolution, Long> {
-    CounselSolution findByResult(String result);
+    CounselSolution findByCounselSurveyId(Long counsel_survey_id);
 }

@@ -36,7 +36,7 @@ public class UserCommentController {
 
     @GetMapping
     public Iterable<Comment> getComment(@PathVariable Long user_id) {
-        return commentRepository.findByMemberId(user_id, Sort.by(Sort.Direction.DESC, "writingDate"));
+        return commentRepository.findByMemberId(user_id, Sort.by("writingDate"));
     }
 
     @GetMapping("/{comment_id}")

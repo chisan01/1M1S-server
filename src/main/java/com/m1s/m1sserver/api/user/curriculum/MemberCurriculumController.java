@@ -21,6 +21,9 @@ public class MemberCurriculumController {
 
     @PostMapping
     public @ResponseBody MemberCurriculum addMemberCurriculum(@PathVariable Long user_id, @RequestParam Long curriculum_id) {
+        // 이미 존재하는 경우 예외처리
+        if(memberCurriculumRepository.findByMemberIdAndCurriculumId(user_id, curriculum_id) != null) return null;
+
         MemberCurriculum m = new MemberCurriculum();
         m.setMember(memberRepository.findById(user_id).get());
         m.setCurriculum(curriculumRepository.findById(curriculum_id).get());
@@ -33,11 +36,11 @@ public class MemberCurriculumController {
         return memberCurriculumRepository.findAllByMemberId(user_id);
     }
 
-    @DeleteMapping("/{member_curriculum_id}")
-    public @ResponseBody MemberCurriculum delMemberCurriculum(@PathVariable Long member_curriculum_id) {
-        MemberCurriculum m = memberCurriculumRepository.findById(member_curriculum_id).get();
-        memberCurriculumRepository.deleteById(member_curriculum_id);
+    @DeleteMapping
+    public @ResponseBody MemberCurriculum delMemberCurriculum(@PathVariable Long user_id, @RequestParam Long curriculum_id) {
+        MemberCurriculum m = memberCurriculumRepository.findByMemberIdAndCurriculumId(user_id, curriculum_id);
+        if(m == null) return null;
+        memberCurriculumRepository.deleteById(m.getId());
         return m;
     }
-
 }

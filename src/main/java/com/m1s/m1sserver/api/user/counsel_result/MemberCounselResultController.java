@@ -19,10 +19,10 @@ public class MemberCounselResultController {
     CounselSolutionRepository counselSolutionRepository;
 
     @PostMapping
-    public MemberCounselResult addMemberCounselResult(@PathVariable Long user_id, @RequestParam String result) {
+    public MemberCounselResult addMemberCounselResult(@PathVariable Long user_id, @RequestBody String result) {
         MemberCounselResult m = new MemberCounselResult();
         m.setMember(memberRepository.findById(user_id).get());
-        m.setCounselSolution(counselSolutionRepository.findByResult(result));
+        m.setCounselSolution(result);
         m.setCounselTime(LocalDateTime.now());
         memberCounselResultRepository.save(m);
         return m;
@@ -30,7 +30,7 @@ public class MemberCounselResultController {
 
     @GetMapping
     public Iterable<MemberCounselResult> getMemberCounselResult(@PathVariable Long user_id) {
-        return memberCounselResultRepository.findAllByMemberId(user_id, Sort.by("counselTime"));
+        return memberCounselResultRepository.findAllByMemberId(user_id, Sort.by(Sort.Direction.DESC, "counselTime"));
     }
 
     @DeleteMapping("/{member_counsel_result_id}")
