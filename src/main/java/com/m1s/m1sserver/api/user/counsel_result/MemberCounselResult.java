@@ -22,10 +22,9 @@ public class MemberCounselResult {
     @Setter @Getter
     private Member member;
 
-    @ManyToOne
-    @JoinColumn(name = "counsel_solution_id")
+    @Column(length = 1000)
     @Getter @Setter
-    private CounselSolution counselSolution;
+    private String counselSolution;
 
     @Setter @Getter
     private LocalDateTime counselTime;

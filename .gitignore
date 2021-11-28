@@ -161,3 +161,11 @@ gradle-app.setting
 .classpath
 
 # End of https://www.toptal.com/developers/gitignore/api/gradle,intellij,java
+
+# Docker
+/db/data
+
+docker-compose.yml
+Dockerfile
+Dockerfile-db
+.env

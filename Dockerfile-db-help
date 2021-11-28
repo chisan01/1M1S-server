@@ -1,0 +1,6 @@
+FROM mariadb:latest
+
+ENV MYSQL_ROOT_PASSWORD <루트 계정 비밀번호>
+ENV MYSQL_DATABASE <사용할 데이터베이스>
+ENV MYSQL_USER <생성할 유저명>
+ENV MYSQL_PASSWORD <유저 비밀번호>

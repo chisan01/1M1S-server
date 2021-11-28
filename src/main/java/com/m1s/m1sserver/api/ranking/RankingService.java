@@ -31,6 +31,10 @@ public class RankingService {
         return rankingRepository.findByMemberIdAndInterestId(member.getId(), interest.getId());
     }
 
+    public Iterable<Ranking> getTopRankings(Long interest_id) {
+        return rankingRepository.getTopRankings(interest_id);
+    }
+
     public Ranking createRanking(Member member, Interest interest){
         return save(Ranking.builder()
                 .member(member)

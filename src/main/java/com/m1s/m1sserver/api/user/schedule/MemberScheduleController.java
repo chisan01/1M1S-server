@@ -38,7 +38,6 @@ public class MemberScheduleController {
     }
 
     @GetMapping
-
     public Iterable<MemberSchedule> getMemberSchedules(Authentication authentication, @RequestParam String search_time) {
         Member me = authService.getMe(authentication);
         return memberScheduleService.getMemberSchedules(me, search_time);

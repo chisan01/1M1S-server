@@ -22,5 +22,5 @@ public class Curriculum {
     private Interest interest;
 
     @Getter @Setter
-    private Integer level;
+    private String level;
 }

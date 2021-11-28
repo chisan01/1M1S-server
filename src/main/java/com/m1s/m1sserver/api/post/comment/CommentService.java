@@ -27,8 +27,14 @@ public class CommentService {
     @Autowired
     private AuthService authService;
 
+    // Post 기준으로 댓글 목록 검색
     public Iterable<Comment> getComments(Long post_id){
-        return commentRepository.findByPostId(post_id, Sort.by(Sort.Direction.DESC, "writingDate"));
+        return commentRepository.findByPostId(post_id, Sort.by("writingDate"));
+    }
+
+    // 작성자 기준으로 댓글 목록 리턴
+    public Iterable<Comment> getComments(Member member){
+        return commentRepository.findByMember(member, Sort.by("writingDate"));
     }
 
     public Comment getComment(Long comment_id){
