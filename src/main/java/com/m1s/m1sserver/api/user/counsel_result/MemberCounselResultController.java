@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("api/user/{user_id}/counsel-result")
+@RequestMapping("api/user/counsel-result")
 public class MemberCounselResultController {
     @Autowired
     MemberService memberService;

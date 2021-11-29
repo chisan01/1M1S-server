@@ -65,7 +65,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
 
         //토큰이 있다면 적절한 토큰인지 확인하고, 적절하다면 권한 인정, 적절하지 않을경우 권한없음으로 통과
-        Jws<Claims> claims = authenticationTokenProvider.parseToken(xAccessToken, JwtAuthenticationTokenProvider.getACCESS_PRIVATE_KEY());
+        Jws<Claims> claims = authenticationTokenProvider.parseToken(xAccessToken, JwtAuthenticationTokenProvider.getACCESS_PRIVATE_KEY().toString());
         if(claims == null){
             //잘못된 토큰일경우 필터를 권한없이 통과
             filter.doFilter(request,response);

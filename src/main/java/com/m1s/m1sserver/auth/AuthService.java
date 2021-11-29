@@ -76,7 +76,8 @@ public class AuthService {
         if(member.getPassword().equals(""))throw new CustomException(ErrorCode.NO_PASSWORD);
         //refcell22 - 이 로직에 의하면 사용자가 username이 아닌 id까지 알고있어야 로그인이 가능한건데.. 이 구현이 맞나?
         Member foundMember = memberService.loginInformationCheck(member.getUsername(), member.getPassword());
-        AuthenticationToken authenticationToken = jwtAuthenticationTokenProvider.issue(member.getId());
+
+        AuthenticationToken authenticationToken = jwtAuthenticationTokenProvider.issue(memberService.getMember(member.getUsername()).getId());
         //refreshTokenService.insertRefreshToken(member, authenticationToken.getRefreshToken());
         return authenticationToken;
     }
