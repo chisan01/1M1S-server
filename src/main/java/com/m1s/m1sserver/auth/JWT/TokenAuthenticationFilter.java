@@ -65,8 +65,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         }
 
         //토큰이 있다면 적절한 토큰인지 확인하고, 적절하다면 권한 인정, 적절하지 않을경우 권한없음으로 통과
-        Jws<Claims> claims = authenticationTokenProvider.parseToken(xAccessToken, JwtAuthenticationTokenProvider.getACCESS_PRIVATE_KEY().toString());
+        Jws<Claims> claims = authenticationTokenProvider.parseToken(xAccessToken, JwtAuthenticationTokenProvider.getACCESS_PRIVATE_KEY());
         if(claims == null){
+            System.out.println("asdjkasbfkj");
             //잘못된 토큰일경우 필터를 권한없이 통과
             filter.doFilter(request,response);
             return;
@@ -74,6 +75,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         //이미 로그인된상태로 토큰이 적절한경우 토큰을 Authentication으로 변환하여 스프링 시큐리티에 전달, 이후 권한검사는 스프링시큐리티가 알아서함
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(claims));
+        System.out.println("asdasdsad");
         filter.doFilter(request, response);
     }
 }

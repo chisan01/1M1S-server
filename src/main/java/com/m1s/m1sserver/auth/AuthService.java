@@ -10,12 +10,15 @@ import com.m1s.m1sserver.api.user.information.MemberInformationService;
 import com.m1s.m1sserver.api.user.interest.MemberInterestService;
 import com.m1s.m1sserver.api.user.schedule.MemberScheduleService;
 import com.m1s.m1sserver.auth.JWT.AuthenticationToken;
+import com.m1s.m1sserver.auth.JWT.JwtAuthentication;
 import com.m1s.m1sserver.auth.JWT.JwtAuthenticationTokenProvider;
 import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.auth.member.MemberService;
 import com.m1s.m1sserver.auth.refresh_token.RefreshTokenService;
 import com.m1s.m1sserver.utils.CustomException;
 import com.m1s.m1sserver.utils.ErrorCode;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -66,7 +69,9 @@ public class AuthService {
 
 
     public Long getMyId(Authentication authentication){
-        return (Long) authentication.getPrincipal();
+        JwtAuthentication jwtAuthentication = (JwtAuthentication) authentication;
+        System.out.println(jwtAuthentication.getPrincipal());
+        return Long.parseLong(jwtAuthentication.getPrincipal().getBody().getSubject());
     }
     public Member getMe(Authentication authentication){
         return memberService.getMember(getMyId(authentication));

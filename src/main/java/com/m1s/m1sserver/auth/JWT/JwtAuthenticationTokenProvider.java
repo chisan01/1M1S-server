@@ -32,7 +32,7 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
     public static final SecretKey REFRESH_PRIVATE_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 
-    public static final Long ACCESS_TOKEN_EXPIRATION_MS = 1000000L;
+    public static final Long ACCESS_TOKEN_EXPIRATION_MS = 10000000000000L;
 
 
     public static final Long REFRESH_TOKEN_EXPIRATION_MS = 1000000L;
@@ -88,12 +88,14 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
      * edited by refcell22
      */
     @Override
-    public Jws<Claims> parseToken(String token, String PRIVATE_KEY){
+    public Jws<Claims> parseToken(String token, SecretKey PRIVATE_KEY){
         if(!token.isEmpty()){
             try{
                 return Jwts.parserBuilder().setSigningKey(PRIVATE_KEY).build()
                         .parseClaimsJws(token);
             }catch(Exception e){//헤더, 페이로드, 시그니쳐 중 시그니쳐가 해석 불가능할 때
+                System.out.println(PRIVATE_KEY);
+                System.out.println(e);
                 return null;
             }
         }
