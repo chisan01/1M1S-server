@@ -1,12 +1,10 @@
 package com.m1s.m1sserver.api.counsel_solution;
 
+import com.m1s.m1sserver.api.counsel_survey.CounselSurvey;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class CounselSolution {
@@ -15,8 +13,10 @@ public class CounselSolution {
     @Getter @Setter
     private long id;
 
+    @OneToOne
+    @JoinColumn(name = "counsel_survey_id")
     @Setter @Getter
-    private String result;
+    private CounselSurvey counselSurvey;
 
     @Setter @Getter
     private String solution;

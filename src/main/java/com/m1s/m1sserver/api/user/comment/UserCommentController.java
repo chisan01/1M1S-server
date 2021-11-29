@@ -46,8 +46,8 @@ public class UserCommentController {
 
     @GetMapping
     public Iterable<Comment> getComments(Authentication authentication) {
-        Long user_id = authService.getMyId(authentication);
-        return commentService.getComments(user_id);
+        Member foundMember = authService.getMe(authentication);
+        return commentService.getComments(foundMember);
     }
 
     @GetMapping("/{comment_id}")

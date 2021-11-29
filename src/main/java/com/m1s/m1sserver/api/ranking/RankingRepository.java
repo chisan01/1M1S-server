@@ -16,4 +16,12 @@ public interface RankingRepository extends JpaRepository<Ranking, Long> {
     void deleteAllByMemberId(Long user_id);
     boolean existsByMemberIdAndInterestId(Long user_id, Long interest_id);
     Ranking findByMemberIdAndInterestId(Long user_id, Long interest_id);
+
+    @Query(value = "SELECT id,score,interest_id,member_id FROM (\n" +
+            "SELECT *,\n" +
+            "DENSE_RANK() over ( ORDER BY score DESC ) as RANK\n" +
+            "FROM ranking WHERE interest_id = ?1\n" +
+            ") AS r ORDER BY RANK\n" +
+            "LIMIT 3", nativeQuery = true)
+    Iterable<Ranking> getTopRankings(Long interest_id);
 }

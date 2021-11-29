@@ -30,10 +30,9 @@ public class MemberCounselResultController {
     AuthService authService;
 
     @PostMapping
-    public MemberCounselResult addMemberCounselResult(Authentication authentication, @RequestParam String result) {
+    public MemberCounselResult addMemberCounselResult(Authentication authentication, @RequestBody String result) {
         Member member = authService.getMe(authentication);
-        CounselSolution foundCounselSolution = counselSolutionService.getCounselSolution(result);
-        MemberCounselResult createdMemberCounselResult = memberCounselResultService.createMemberCounselResult(member, foundCounselSolution);
+        MemberCounselResult createdMemberCounselResult = memberCounselResultService.createMemberCounselResult(member, result);
         memberCounselResultService.save(createdMemberCounselResult);
         return createdMemberCounselResult;
     }

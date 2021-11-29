@@ -26,13 +26,8 @@ public class RankingController {
         return rankingService.getRankNum(member, interest);
     }
 
-    // put은 나중에 admin에서 관리
-//    @PutMapping
-//    public void setRanking() {
-//        Iterable<Ranking> rs = rankingRepository.findAll();
-//        for(Ranking s : rs) {
-//            s.setScore(0);
-//            rankingRepository.save(s);
-//        }
-//    }
+    @GetMapping("/top3")
+    public Iterable<Ranking> getTopRankings(@RequestParam Long interest_id) {
+        return rankingService.getTopRankings(interest_id);
+    }
 }

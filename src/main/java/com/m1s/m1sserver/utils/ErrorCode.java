@@ -32,12 +32,14 @@ public enum ErrorCode {
     MEMBER_SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 멤버 스케쥴을 찾을 수 없습니다."),
     ENVIRONMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 환경변수가 없습니다."),
     MEMBER_INTEREST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 멤버 관심사를 찾을 수 없습니다."),
+
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 보통 중복된 데이터 존재 */
     DUPLICATE_USERNAME(HttpStatus.CONFLICT, "중복된 아이디입니다."),
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "중복된 이메일입니다."),
     DUPLICATE_PHONE(HttpStatus.CONFLICT, "중복된 연락처입니다."),
     DUPLICATE_PARTICIPANT(HttpStatus.CONFLICT, "이미 참여중인 회원입니다."),
     DUPLICATE_PASSWORD(HttpStatus.CONFLICT, "기존 비밀번호와 동일합니다."),
+    DUPLICATE_MEMBER_CURRICULUM(HttpStatus.CONFLICT, "중복된 커리큘럼입니다."),
 
     NO_USERNAME(HttpStatus.BAD_REQUEST, "아이디를 입력하세요."),
     NO_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호를 입력하세요."),

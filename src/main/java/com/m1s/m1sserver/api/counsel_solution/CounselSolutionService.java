@@ -14,8 +14,8 @@ public class CounselSolutionService {
     @Autowired
     CounselSolutionRepository counselSolutionRepository;
 
-    public CounselSolution getCounselSolution(String result){
-        CounselSolution counselSolution = counselSolutionRepository.findByResult(result);
+    public CounselSolution getCounselSolution(Long counsel_survey_id){
+        CounselSolution counselSolution = counselSolutionRepository.findByCounselSurveyId(counsel_survey_id);
         if(counselSolution == null)throw new CustomException(ErrorCode.COUNSEL_SOLUTION_NOT_FOUND);
         return counselSolution;
     }

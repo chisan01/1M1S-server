@@ -6,6 +6,8 @@ import com.m1s.m1sserver.api.curriculum.CurriculumService;
 import com.m1s.m1sserver.auth.AuthService;
 import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.auth.member.MemberRepository;
+import com.m1s.m1sserver.utils.CustomException;
+import com.m1s.m1sserver.utils.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -22,8 +24,11 @@ public class MemberCurriculumController {
     private CurriculumService curriculumService;
     @Autowired
     private AuthService authService;
+
     @PostMapping
     public @ResponseBody MemberCurriculum addMemberCurriculum(Authentication authentication, @RequestParam Long curriculum_id) {
+        MemberCurriculum foundMemberCurriculum = memberCurriculumService.getMemberCurriculum(authentication, curriculum_id);
+        if(foundMemberCurriculum != null) throw new CustomException(ErrorCode.DUPLICATE_MEMBER_CURRICULUM);
         Member me = authService.getMe(authentication);
         Curriculum foundCurriculum = curriculumService.getCurriculum(curriculum_id);
         MemberCurriculum newCurriculum = memberCurriculumService.createMemberCurriculum(me, foundCurriculum);
@@ -36,9 +41,9 @@ public class MemberCurriculumController {
         return memberCurriculumService.getMemberCurriculums(me);
     }
 
-    @DeleteMapping("/{member_curriculum_id}")
-    public @ResponseBody MemberCurriculum deleteMemberCurriculum(Authentication authentication, @PathVariable Long member_curriculum_id) {
-        return memberCurriculumService.deleteMemberCurriculum(authentication, member_curriculum_id);
+    @DeleteMapping
+    public @ResponseBody MemberCurriculum deleteMemberCurriculum(Authentication authentication, @RequestParam Long curriculum_id) {
+        return memberCurriculumService.deleteMemberCurriculum(authentication, curriculum_id);
     }
 
 }

@@ -40,11 +40,14 @@ public class MemberCurriculumService {
         return memberCurriculumRepository.findById(member_curriculum_id).get();
     }
 
-    public MemberCurriculum deleteMemberCurriculum(Authentication authentication, Long member_curriculum_id){
+    public MemberCurriculum getMemberCurriculum(Authentication authentication, Long curriculum_id) {
+        return memberCurriculumRepository.findByMemberAndCurriculumId(authService.getMe(authentication), curriculum_id);
+    }
 
-        MemberCurriculum foundMemberCurriculum = getMemberCurriculum(member_curriculum_id);
-        if(!checkOwner(authService.getMyId(authentication), foundMemberCurriculum))
-            throw new CustomException(ErrorCode.NO_AUTHENTICATION);
+    public MemberCurriculum deleteMemberCurriculum(Authentication authentication, Long curriculum_id){
+        MemberCurriculum foundMemberCurriculum = getMemberCurriculum(authentication, curriculum_id);
+        if(foundMemberCurriculum == null)
+            throw new CustomException(ErrorCode.MEMBER_CURRICULUM_NOT_FOUND);
         memberCurriculumRepository.delete(foundMemberCurriculum);
         return foundMemberCurriculum;
     }

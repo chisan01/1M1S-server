@@ -7,6 +7,7 @@ import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.utils.CustomException;
 import com.m1s.m1sserver.utils.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class MemberCounselResultService {
     private AuthService authService;
 
     public Iterable<MemberCounselResult> getMemberCounselResults(Member member){
-        return memberCounselResultRepository.findAllByMemberOrderByCounselTime(member);
+        return memberCounselResultRepository.findAllByMember(member, Sort.by(Sort.Direction.DESC, "counselTIme"));
     }
 
     public MemberCounselResult getMemberCounselResult(Member member){
@@ -38,7 +39,7 @@ public class MemberCounselResultService {
 
     }
 
-    public MemberCounselResult createMemberCounselResult(Member member, CounselSolution counselSolution){
+    public MemberCounselResult createMemberCounselResult(Member member, String counselSolution){
         return MemberCounselResult.builder()
                 .member(member)
                 .counselSolution(counselSolution)
