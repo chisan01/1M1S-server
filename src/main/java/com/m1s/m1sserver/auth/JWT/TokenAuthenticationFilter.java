@@ -45,29 +45,23 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         throws ServletException, IOException {
         HashMap<String, String> tokens = authenticationTokenProvider.parseTokenString(request);
         //토큰없을경우 권한없음으로 통과
-        if(tokens == null){
+        if(tokens == null || tokens.get("x-access-token").equals("")){
             filter.doFilter(request,response);
             return;
         }
 
         String xAccessToken = tokens.get("x-access-token");
-        String xRefreshToken = tokens.get("x-refresh-token");
         Long member_id = authenticationTokenProvider.getTokenOwnerNo(xAccessToken);
         Member member = memberService.getMember(member_id);
 
         //리프레시토큰이 헤더에 있는 경우에만 토큰 갱신 처리
         //TODO 알아서 처리할것, 이부분은 구현안함
-        if(refreshTokenService.checkRefreshToken(member,xRefreshToken)){
-//            refreshTokenService.updateRefreshToken(member, authenticationToken.getRefreshToken());
-//            AuthenticationToken authenticationToken = authenticationTokenProvider.issue(member_id);
-//        response.addHeader("x-access-token", aunticationToken.getAccessToken());
-//        response.addHeader("x-refresh-token", authenticationToken.getRefreshToken());
-        }
+
 
         //토큰이 있다면 적절한 토큰인지 확인하고, 적절하다면 권한 인정, 적절하지 않을경우 권한없음으로 통과
         Jws<Claims> claims = authenticationTokenProvider.parseToken(xAccessToken, JwtAuthenticationTokenProvider.getACCESS_PRIVATE_KEY());
+
         if(claims == null){
-            System.out.println("asdjkasbfkj");
             //잘못된 토큰일경우 필터를 권한없이 통과
             filter.doFilter(request,response);
             return;
@@ -75,7 +69,6 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
         //이미 로그인된상태로 토큰이 적절한경우 토큰을 Authentication으로 변환하여 스프링 시큐리티에 전달, 이후 권한검사는 스프링시큐리티가 알아서함
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(claims));
-        System.out.println("asdasdsad");
         filter.doFilter(request, response);
     }
 }

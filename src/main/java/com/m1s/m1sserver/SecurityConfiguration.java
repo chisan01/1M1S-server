@@ -23,7 +23,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     private static final String[] PUBLIC_URI = {
-            "/auth/**"
+            "/auth/**",
+            "/api/register-survey"
     };
 
     @Override

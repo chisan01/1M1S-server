@@ -51,7 +51,6 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
     private String buildToken(Long userId, Long EXPIRATION_MS){
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiredAt = now.plus(EXPIRATION_MS, ChronoUnit.MILLIS);
-        System.out.println(userId);
         return Jwts.builder()
                 .setSubject(String.valueOf(userId))
                 .setIssuedAt(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()))
@@ -77,7 +76,6 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(ACCESS_PRIVATE_KEY).build()
                 .parseClaimsJws(token).getBody();
-        System.out.println(claims);
         return Long.parseLong(claims.getSubject());
     };
 
@@ -94,8 +92,6 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
                 return Jwts.parserBuilder().setSigningKey(PRIVATE_KEY).build()
                         .parseClaimsJws(token);
             }catch(Exception e){//헤더, 페이로드, 시그니쳐 중 시그니쳐가 해석 불가능할 때
-                System.out.println(PRIVATE_KEY);
-                System.out.println(e);
                 return null;
             }
         }
