@@ -65,7 +65,7 @@ public class CommentService {
                 .member(member)
                 .post(post)
                 .content(comment.getContent())
-                .writing_date(LocalDateTime.now())
+                .writingDate(LocalDateTime.now())
                 .build());
     }
 

@@ -27,7 +27,7 @@ public class PostService {
 
     public Post createPost(Member member, Post newPost){
         newPost.setMember(member);
-        newPost.setWriting_date(LocalDateTime.now());
+        newPost.setWritingDate(LocalDateTime.now());
         return save(newPost);
     }
 
@@ -49,7 +49,7 @@ public class PostService {
     }
 
     public  Iterable<Post> getPosts(Member member){
-        return postRepository.findByMemberId(member.getId(),Sort.by(Sort.Direction.DESC, "writingDate"));
+        return postRepository.findByMember(member,Sort.by(Sort.Direction.DESC, "writingDate"));
     }
 
     public Iterable<Post> getPosts(Party party){

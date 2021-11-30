@@ -31,7 +31,7 @@ public class Comment {
     private Member member;
 
     @Getter @Setter
-    private LocalDateTime writing_date;
+    private LocalDateTime writingDate;
 
     public Long getMemberId(){return member.getId();}
 }
