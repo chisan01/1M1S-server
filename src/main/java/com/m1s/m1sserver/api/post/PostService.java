@@ -5,6 +5,7 @@ import com.m1s.m1sserver.api.group.Party;
 import com.m1s.m1sserver.api.group.PartyService;
 import com.m1s.m1sserver.api.group.member.PartyMember;
 import com.m1s.m1sserver.api.group.member.PartyMemberService;
+import com.m1s.m1sserver.api.interest.InterestService;
 import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.utils.CustomException;
 import com.m1s.m1sserver.utils.ErrorCode;
@@ -25,9 +26,13 @@ public class PostService {
     @Autowired
     private PartyService partyService;
 
+
+    @Autowired
+    private InterestService interestService;
     public Post createPost(Member member, Post newPost){
         newPost.setMember(member);
         newPost.setWritingDate(LocalDateTime.now());
+        newPost.setInterest(interestService.getInterest(newPost.getInterest().getSubject()));
         return save(newPost);
     }
 
@@ -60,8 +65,8 @@ public class PostService {
         return postRepository.findAll(Sort.by("writingDate"));
     }
 
-    public boolean checkOwner(Member member, Post post){
-        if(member.getId() != post.getMemberId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);
+    public Boolean checkOwner(Member member, Post post){
+        if(member.getId() != post.getMember().getId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);
         return true;
     }
 

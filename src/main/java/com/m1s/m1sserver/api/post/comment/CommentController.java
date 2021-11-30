@@ -15,7 +15,7 @@ public class CommentController {
     private CommentService commentService;
 
     @GetMapping
-    public Iterable<Comment> getComment(@PathVariable Long post_id) {
+    public Iterable<Comment> getComments(@PathVariable Long post_id) {
         return commentService.getComments(post_id);
     }
 }

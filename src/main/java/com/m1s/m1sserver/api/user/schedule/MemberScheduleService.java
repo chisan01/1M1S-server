@@ -28,7 +28,7 @@ public class MemberScheduleService {
     private EnvironmentService environmentService;
 
     public boolean checkOwner(Member member, MemberSchedule memberSchedule){
-        if(member.getId() != memberSchedule.getMemberId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);
+        if(member.getId() != memberSchedule.getMember().getId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);
         return true;
     }
 
@@ -46,7 +46,6 @@ public class MemberScheduleService {
                 t.getMonthValue(), t.getDayOfMonth());
     }
     public MemberSchedule createMemberSchedule(Member member, MemberSchedule memberSchedule){
-        checkOwner(member, memberSchedule);
         memberSchedule.setMember(member);
         memberSchedule.setFinish(false);
         return save(memberSchedule);
