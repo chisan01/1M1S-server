@@ -29,7 +29,7 @@ public class RegisterSurveyController {
 
     @PostMapping
     public @ResponseBody
-    MemberInterest addMemberInterest(Authentication authentication, @RequestBody MemberInterest memberInterest) {
+    MemberInterest addMemberInterest(Authentication authentication, MemberInterest memberInterest) {
         Member me = authService.getMe(authentication);
         memberInterest.setMember(me);
         return memberInterestService.createMemberInterest(memberInterest);

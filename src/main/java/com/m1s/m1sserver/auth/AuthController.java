@@ -46,6 +46,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public AuthenticationToken login(@RequestBody Member member){
+
         return authService.login(member);
     }
 

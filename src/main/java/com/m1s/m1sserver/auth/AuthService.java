@@ -70,11 +70,13 @@ public class AuthService {
 
 
     public Long getMyId(Authentication authentication){
+
         JwtAuthentication jwtAuthentication = (JwtAuthentication) authentication;
+        System.out.println(jwtAuthentication.getPrincipal().getBody());
         return Long.parseLong(jwtAuthentication.getPrincipal().getBody().getSubject());
     }
     public Member getMe(Authentication authentication){
-        return member;
+        return memberService.getMember(getMyId(authentication));
     }
     public AuthenticationToken login(Member member){
         if(member.getUsername().equals(""))throw new CustomException(ErrorCode.NO_USERNAME);

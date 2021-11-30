@@ -32,7 +32,7 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
     public static final SecretKey REFRESH_PRIVATE_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 
-    public static final Long ACCESS_TOKEN_EXPIRATION_MS = 10000000000000L;
+    public static final Long ACCESS_TOKEN_EXPIRATION_MS = 1000000000000000000L;
 
 
     public static final Long REFRESH_TOKEN_EXPIRATION_MS = 1000000L;
