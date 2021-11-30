@@ -2,6 +2,7 @@ package com.m1s.m1sserver.api.user.interest;
 
 
 import com.m1s.m1sserver.api.interest.Interest;
+import com.m1s.m1sserver.api.interest.InterestService;
 import com.m1s.m1sserver.api.ranking.Ranking;
 import com.m1s.m1sserver.api.ranking.RankingService;
 import com.m1s.m1sserver.auth.member.Member;
@@ -18,41 +19,36 @@ public class MemberInterestService {
     @Autowired
     private RankingService rankingService;
 
-    public MemberInterest createMemberInterest(Member member, Interest interest, Integer level){
-        Ranking ranking;
-        try {
-            ranking = rankingService.getRanking(member, interest);
-        }catch (CustomException e){
-            ranking = rankingService.createRanking(member,interest);
-        }
-
-        return save(MemberInterest.builder()
-                .member(member)
-                .interest(interest)
-                .level(level)
-                .build());
-
-    }
+    @Autowired
+    private InterestService interestService;
 
     public MemberInterest createMemberInterest(MemberInterest memberInterest){
         Ranking ranking;
-        ranking = rankingService.createRanking(memberInterest.getMember(),memberInterest.getInterest());
+        interestService.getInterests().forEach(data-> {
+            try {
+                System.out.println(data.getSubject());
+                rankingService.getRanking(memberInterest.getMember(),data);
+            }catch (Exception e){
+                rankingService.createRanking(memberInterest.getMember(),data);
+            }
+        });
         return save(memberInterest);
     }
 
 
     public boolean checkOwner(Member member, MemberInterest memberInterest){
-        if(member.getId() != memberInterest.getMemberId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);
+        if(member.getId() != memberInterest.getMember().getId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);
         return true;
     }
 
-    public MemberInterest editLevel(Member member, MemberInterest memberInterest, Integer level){
+    public MemberInterest editLevel(Member member, MemberInterest memberInterest, String level){
         checkOwner(member, memberInterest);
         if(level != null)memberInterest.setLevel(level);
         return save(memberInterest);
     }
 
     public Iterable<MemberInterest> getMemberInterests(Member member){
+
         return memberInterestRepository.findAllByMember(member);
     }
 

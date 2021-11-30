@@ -14,7 +14,10 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 
@@ -44,36 +47,60 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter)
         throws ServletException, IOException {
         HashMap<String, String> tokens = authenticationTokenProvider.parseTokenString(request);
+//        String body = null;
+//        StringBuilder stringBuilder = new StringBuilder();
+//        BufferedReader bufferedReader = null;
+//
+//        try {
+//            InputStream inputStream = request.getInputStream();
+//            if (inputStream != null) {
+//                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+//                char[] charBuffer = new char[128];
+//                int bytesRead = -1;
+//                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+//                    stringBuilder.append(charBuffer, 0, bytesRead);
+//                }
+//            }
+//        } catch (IOException ex) {
+//            throw ex;
+//        } finally {
+//            if (bufferedReader != null) {
+//                try {
+//                    bufferedReader.close();
+//                } catch (IOException ex) {
+//                    throw ex;
+//                }
+//            }
+//        }
+//
+//        System.out.println(stringBuilder.toString());
         //토큰없을경우 권한없음으로 통과
-        if(tokens == null){
+        if(tokens == null || tokens.get("x-access-token").equals("")){
             filter.doFilter(request,response);
             return;
         }
 
         String xAccessToken = tokens.get("x-access-token");
-        String xRefreshToken = tokens.get("x-refresh-token");
         Long member_id = authenticationTokenProvider.getTokenOwnerNo(xAccessToken);
         Member member = memberService.getMember(member_id);
 
         //리프레시토큰이 헤더에 있는 경우에만 토큰 갱신 처리
         //TODO 알아서 처리할것, 이부분은 구현안함
-        if(refreshTokenService.checkRefreshToken(member,xRefreshToken)){
-//            refreshTokenService.updateRefreshToken(member, authenticationToken.getRefreshToken());
-//            AuthenticationToken authenticationToken = authenticationTokenProvider.issue(member_id);
-//        response.addHeader("x-access-token", aunticationToken.getAccessToken());
-//        response.addHeader("x-refresh-token", authenticationToken.getRefreshToken());
-        }
+
 
         //토큰이 있다면 적절한 토큰인지 확인하고, 적절하다면 권한 인정, 적절하지 않을경우 권한없음으로 통과
         Jws<Claims> claims = authenticationTokenProvider.parseToken(xAccessToken, JwtAuthenticationTokenProvider.getACCESS_PRIVATE_KEY());
+
         if(claims == null){
             //잘못된 토큰일경우 필터를 권한없이 통과
             filter.doFilter(request,response);
             return;
         }
-
+        System.out.println(2);
         //이미 로그인된상태로 토큰이 적절한경우 토큰을 Authentication으로 변환하여 스프링 시큐리티에 전달, 이후 권한검사는 스프링시큐리티가 알아서함
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(claims));
+        response.addHeader("x-access-token", authenticationTokenProvider.issue(memberService.getMember(member.getUsername()).getId()).getAccessToken());
+        System.out.println(3);
         filter.doFilter(request, response);
     }
 }

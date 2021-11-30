@@ -10,12 +10,15 @@ import com.m1s.m1sserver.api.user.information.MemberInformationService;
 import com.m1s.m1sserver.api.user.interest.MemberInterestService;
 import com.m1s.m1sserver.api.user.schedule.MemberScheduleService;
 import com.m1s.m1sserver.auth.JWT.AuthenticationToken;
+import com.m1s.m1sserver.auth.JWT.JwtAuthentication;
 import com.m1s.m1sserver.auth.JWT.JwtAuthenticationTokenProvider;
 import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.auth.member.MemberService;
 import com.m1s.m1sserver.auth.refresh_token.RefreshTokenService;
 import com.m1s.m1sserver.utils.CustomException;
 import com.m1s.m1sserver.utils.ErrorCode;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -55,6 +58,7 @@ public class AuthService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    private Member member;
 
     public String encodePassword(String password){return passwordEncoder.encode(password);}
 
@@ -66,7 +70,10 @@ public class AuthService {
 
 
     public Long getMyId(Authentication authentication){
-        return (Long) authentication.getPrincipal();
+
+        JwtAuthentication jwtAuthentication = (JwtAuthentication) authentication;
+        System.out.println(jwtAuthentication.getPrincipal().getBody());
+        return Long.parseLong(jwtAuthentication.getPrincipal().getBody().getSubject());
     }
     public Member getMe(Authentication authentication){
         return memberService.getMember(getMyId(authentication));
@@ -74,9 +81,9 @@ public class AuthService {
     public AuthenticationToken login(Member member){
         if(member.getUsername().equals(""))throw new CustomException(ErrorCode.NO_USERNAME);
         if(member.getPassword().equals(""))throw new CustomException(ErrorCode.NO_PASSWORD);
-        //refcell22 - 이 로직에 의하면 사용자가 username이 아닌 id까지 알고있어야 로그인이 가능한건데.. 이 구현이 맞나?
         Member foundMember = memberService.loginInformationCheck(member.getUsername(), member.getPassword());
-        AuthenticationToken authenticationToken = jwtAuthenticationTokenProvider.issue(member.getId());
+
+        AuthenticationToken authenticationToken = jwtAuthenticationTokenProvider.issue(memberService.getMember(member.getUsername()).getId());
         //refreshTokenService.insertRefreshToken(member, authenticationToken.getRefreshToken());
         return authenticationToken;
     }

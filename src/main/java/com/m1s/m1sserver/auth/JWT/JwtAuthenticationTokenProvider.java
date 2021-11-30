@@ -3,12 +3,14 @@ package com.m1s.m1sserver.auth.JWT;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -23,14 +25,14 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationTokenProvider.class);
 
     @Getter
-    private static final String ACCESS_PRIVATE_KEY = "accessPrivateKeydkdoldoan;asdflkjaf";
+    private static final SecretKey ACCESS_PRIVATE_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 
     @Getter
-    public static final String REFRESH_PRIVATE_KEY = "refreshPrivateKeyasdfjlasfdjohyeonchang";
+    public static final SecretKey REFRESH_PRIVATE_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 
-    public static final Long ACCESS_TOKEN_EXPIRATION_MS = 1000000L;
+    public static final Long ACCESS_TOKEN_EXPIRATION_MS = 1000000000000000000L;
 
 
     public static final Long REFRESH_TOKEN_EXPIRATION_MS = 1000000L;
@@ -58,7 +60,7 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
     }
 
     private Key getSignKey(){
-        return Keys.hmacShaKeyFor(ACCESS_PRIVATE_KEY.getBytes(StandardCharsets.UTF_8));
+        return ACCESS_PRIVATE_KEY;
     }
 
     @Override
@@ -84,7 +86,7 @@ public class JwtAuthenticationTokenProvider implements AuthenticationTokenProvid
      * edited by refcell22
      */
     @Override
-    public Jws<Claims> parseToken(String token, String PRIVATE_KEY){
+    public Jws<Claims> parseToken(String token, SecretKey PRIVATE_KEY){
         if(!token.isEmpty()){
             try{
                 return Jwts.parserBuilder().setSigningKey(PRIVATE_KEY).build()

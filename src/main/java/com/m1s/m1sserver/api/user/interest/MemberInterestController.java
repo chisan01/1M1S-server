@@ -6,12 +6,14 @@ import com.m1s.m1sserver.api.interest.InterestService;
 import com.m1s.m1sserver.auth.AuthService;
 import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.auth.member.MemberRepository;
+import com.m1s.m1sserver.utils.CustomException;
+import com.m1s.m1sserver.utils.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/api/user/interest")
 public class MemberInterestController {
     @Autowired
@@ -24,10 +26,13 @@ public class MemberInterestController {
     private AuthService authService;
 
     @PostMapping
-    public @ResponseBody MemberInterest addMemberInterest(Authentication authentication, @RequestParam Long interest_id, @RequestParam Integer level) {
-        Member me = authService.getMe(authentication);
-        Interest selectedInterest = interestService.getInterest(interest_id);
-        return memberInterestService.createMemberInterest(me, selectedInterest, level);
+    public @ResponseBody
+    MemberInterest addMemberInterest(Authentication authentication, @RequestBody MemberInterest memberInterest) {
+        System.out.println(memberInterest.getInterest());
+        memberInterest.setMember(authService.getMe(authentication));
+
+        if(memberInterest.getInterest() == null)return memberInterest;
+        return memberInterestService.createMemberInterest(memberInterest);
     }
 
 
@@ -39,7 +44,7 @@ public class MemberInterestController {
     }
 
     @PutMapping("/{member_interest_id}")
-    public @ResponseBody MemberInterest editMemberInterestLevel(Authentication authentication, @PathVariable Long member_interest_id, @RequestParam Integer level) {
+    public @ResponseBody MemberInterest editMemberInterestLevel(Authentication authentication, @PathVariable Long member_interest_id, @RequestParam String level) {
         Member me = authService.getMe(authentication);
         MemberInterest memberInterest = memberInterestService.getMemberInterest(member_interest_id);
         return memberInterestService.editLevel(me, memberInterest, level);

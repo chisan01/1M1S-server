@@ -35,11 +35,7 @@ public class AuthController {
         return authService.join(memberInformation);
     }
 
-    @PostMapping("/survey-result")
-    public @ResponseBody
-    MemberInterest addMemberInterest(@RequestBody MemberInterest memberInterest) {
-        return memberInterestService.createMemberInterest(memberInterest);
-    }
+
 
     @DeleteMapping("/me")
     public void deleteAccount(Authentication authentication){
@@ -47,15 +43,10 @@ public class AuthController {
         authService.deleteAccount(me);
     }
 
-    @DeleteMapping("rollback")
-    public void rollBackJoin(@RequestBody MemberInformation memberInformation){
-        Member member = memberInformation.getMember();
-        memberInformationService.deleteMemberInformation(memberInformation.getMember());
-        memberService.deleteMember(member);
-    }
 
     @PostMapping("/login")
     public AuthenticationToken login(@RequestBody Member member){
+
         return authService.login(member);
     }
 

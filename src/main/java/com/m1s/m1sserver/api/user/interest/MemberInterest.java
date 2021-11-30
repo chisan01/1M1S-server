@@ -4,17 +4,17 @@ import com.m1s.m1sserver.api.interest.Interest;
 import com.m1s.m1sserver.auth.member.Member;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Builder
 public class MemberInterest {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -27,7 +27,6 @@ public class MemberInterest {
     private Interest interest;
 
     @Getter @Setter
-    private Integer level;
+    private String level;
 
-    public Long getMemberId(){return member.getId();}
 }

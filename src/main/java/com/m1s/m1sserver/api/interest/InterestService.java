@@ -16,6 +16,7 @@ public class InterestService {
     }
 
     public Interest getInterest(Long interest_id){
+        System.out.println(4);
         if(!interestRepository.existsById(interest_id))throw new CustomException(ErrorCode.INTEREST_NOT_FOUND);
         return interestRepository.findById(interest_id).get();
     }
