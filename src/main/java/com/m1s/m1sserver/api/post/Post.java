@@ -1,16 +1,17 @@
 package com.m1s.m1sserver.api.post;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.m1s.m1sserver.api.interest.Interest;
 import com.m1s.m1sserver.auth.member.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +36,8 @@ public class Post {
     private Member member;
 
     @Getter @Setter
-    private LocalDateTime writing_date;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime writingDate;
 
-    public Long getMemberId(){return member.getId();}
+
 }

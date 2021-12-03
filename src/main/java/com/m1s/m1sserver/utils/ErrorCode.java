@@ -40,7 +40,7 @@ public enum ErrorCode {
     DUPLICATE_PARTICIPANT(HttpStatus.CONFLICT, "이미 참여중인 회원입니다."),
     DUPLICATE_PASSWORD(HttpStatus.CONFLICT, "기존 비밀번호와 동일합니다."),
     DUPLICATE_MEMBER_CURRICULUM(HttpStatus.CONFLICT, "중복된 커리큘럼입니다."),
-
+    DUPLICATE_NICKNAME(HttpStatus.CONFLICT, "중복된 별명입니다."),
     NO_USERNAME(HttpStatus.BAD_REQUEST, "아이디를 입력하세요."),
     NO_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호를 입력하세요."),
     NO_EMAIL(HttpStatus.BAD_REQUEST, "이메일을 입력하세요."),

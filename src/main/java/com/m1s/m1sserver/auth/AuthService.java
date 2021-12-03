@@ -72,12 +72,13 @@ public class AuthService {
     public Long getMyId(Authentication authentication){
 
         JwtAuthentication jwtAuthentication = (JwtAuthentication) authentication;
-        System.out.println(jwtAuthentication.getPrincipal().getBody());
         return Long.parseLong(jwtAuthentication.getPrincipal().getBody().getSubject());
     }
     public Member getMe(Authentication authentication){
         return memberService.getMember(getMyId(authentication));
     }
+
+
     public AuthenticationToken login(Member member){
         if(member.getUsername().equals(""))throw new CustomException(ErrorCode.NO_USERNAME);
         if(member.getPassword().equals(""))throw new CustomException(ErrorCode.NO_PASSWORD);
@@ -91,14 +92,9 @@ public class AuthService {
     public void checkOwner(Member user, Member target){
         if(user.getId() == target.getId())return;
     }
-
-    public void checkPassword(Member user, String password){
-        if(user.getPassword() != encodePassword(password));
-    }
     public boolean logout(Member member){
         return true;
     }
-
     public void deleteAccount(Member member){
         rankingService.deleteRankings(member);
         memberInterestService.deleteMemberInterests(member);

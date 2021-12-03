@@ -2,15 +2,15 @@ package com.m1s.m1sserver.api.post.comment;
 
 import com.m1s.m1sserver.api.post.Post;
 import com.m1s.m1sserver.auth.member.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,7 +31,5 @@ public class Comment {
     private Member member;
 
     @Getter @Setter
-    private LocalDateTime writing_date;
-
-    public Long getMemberId(){return member.getId();}
+    private LocalDateTime writingDate;
 }

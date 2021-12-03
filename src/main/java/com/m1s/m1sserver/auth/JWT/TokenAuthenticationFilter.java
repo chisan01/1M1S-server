@@ -42,38 +42,34 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
     //이부분은 스프링시큐리티에서 알아서 하니 안쓰는게 맞다. UserStorage는 추후 지울것
 //    @Autowired
 //    private UserStorage userStorage;
+    public void readBody(HttpServletRequest request){
+        String body = null;
+        StringBuilder stringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = null;
 
+    try {
+        InputStream inputStream = request.getInputStream();
+        if (inputStream != null) {
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            char[] charBuffer = new char[128];
+            int bytesRead = -1;
+            while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                stringBuilder.append(charBuffer, 0, bytesRead);
+            }
+        }
+    }catch (Exception e){
+        System.out.println(e);
+    }
+
+
+
+        System.out.println(stringBuilder.toString());
+    }
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter)
         throws ServletException, IOException {
         HashMap<String, String> tokens = authenticationTokenProvider.parseTokenString(request);
-//        String body = null;
-//        StringBuilder stringBuilder = new StringBuilder();
-//        BufferedReader bufferedReader = null;
-//
-//        try {
-//            InputStream inputStream = request.getInputStream();
-//            if (inputStream != null) {
-//                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//                char[] charBuffer = new char[128];
-//                int bytesRead = -1;
-//                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-//                    stringBuilder.append(charBuffer, 0, bytesRead);
-//                }
-//            }
-//        } catch (IOException ex) {
-//            throw ex;
-//        } finally {
-//            if (bufferedReader != null) {
-//                try {
-//                    bufferedReader.close();
-//                } catch (IOException ex) {
-//                    throw ex;
-//                }
-//            }
-//        }
-//
-//        System.out.println(stringBuilder.toString());
+        //readBody(request);
         //토큰없을경우 권한없음으로 통과
         if(tokens == null || tokens.get("x-access-token").equals("")){
             filter.doFilter(request,response);
@@ -96,11 +92,9 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             filter.doFilter(request,response);
             return;
         }
-        System.out.println(2);
         //이미 로그인된상태로 토큰이 적절한경우 토큰을 Authentication으로 변환하여 스프링 시큐리티에 전달, 이후 권한검사는 스프링시큐리티가 알아서함
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(claims));
         response.addHeader("x-access-token", authenticationTokenProvider.issue(memberService.getMember(member.getUsername()).getId()).getAccessToken());
-        System.out.println(3);
         filter.doFilter(request, response);
     }
 }

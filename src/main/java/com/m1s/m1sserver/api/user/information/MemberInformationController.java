@@ -30,6 +30,7 @@ public class MemberInformationController {
     @PutMapping
     public @ResponseBody MemberInformation editMemberInformation(Authentication authentication, @RequestBody MemberInformation newMemberInformation) {
         Member me = authService.getMe(authentication);
+        System.out.println("askjbf");
         MemberInformation targetMemberInformation = memberInformationService.getMemberInfo(me);
         return memberInformationService.editMemberInformation(me, targetMemberInformation, newMemberInformation);
     }

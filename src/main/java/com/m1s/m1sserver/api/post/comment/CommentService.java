@@ -29,7 +29,7 @@ public class CommentService {
 
     // Post 기준으로 댓글 목록 검색
     public Iterable<Comment> getComments(Long post_id){
-        return commentRepository.findByPostId(post_id, Sort.by("writingDate"));
+        return commentRepository.findAllByPostId(post_id, Sort.by("writingDate"));
     }
 
     // 작성자 기준으로 댓글 목록 리턴
@@ -47,7 +47,7 @@ public class CommentService {
         return commentRepository.save(oldComment);
     }
     public boolean checkOwner(Member member, Comment comment){
-        if(member.getId() != comment.getMemberId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);
+        if(member.getId() != comment.getMember().getId())throw new CustomException(ErrorCode.NO_AUTHENTICATION);
         return true;
     }
 
@@ -65,7 +65,7 @@ public class CommentService {
                 .member(member)
                 .post(post)
                 .content(comment.getContent())
-                .writing_date(LocalDateTime.now())
+                .writingDate(LocalDateTime.now())
                 .build());
     }
 

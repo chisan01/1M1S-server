@@ -35,7 +35,10 @@ public class AuthController {
         return authService.join(memberInformation);
     }
 
-
+    @GetMapping("/me")
+    public MemberInformation getMe(Authentication authentication){
+        return memberInformationService.getMemberInfo(authService.getMe(authentication));
+    }
 
     @DeleteMapping("/me")
     public void deleteAccount(Authentication authentication){
@@ -43,6 +46,11 @@ public class AuthController {
         authService.deleteAccount(me);
     }
 
+    @PutMapping("/password")
+    public Member changePassword(Authentication authentication, @RequestBody Member member){
+        Member me = authService.getMe(authentication);
+        return memberService.setPassword(me, member.getPassword());
+    }
 
     @PostMapping("/login")
     public AuthenticationToken login(@RequestBody Member member){

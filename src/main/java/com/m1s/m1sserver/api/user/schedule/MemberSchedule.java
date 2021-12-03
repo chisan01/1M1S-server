@@ -2,9 +2,7 @@ package com.m1s.m1sserver.api.user.schedule;
 
 import com.m1s.m1sserver.api.interest.Interest;
 import com.m1s.m1sserver.auth.member.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +10,8 @@ import java.time.temporal.ChronoUnit;
 
 @Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,7 +45,5 @@ public class MemberSchedule {
     public int calculateScore(String score_per_minute) {
         return Integer.parseInt(Long.toString(ChronoUnit.MINUTES.between(startTime, endTime))) * Integer.parseInt(score_per_minute);
     }
-
-    public Long getMemberId(){return member.getId();}
 
 }

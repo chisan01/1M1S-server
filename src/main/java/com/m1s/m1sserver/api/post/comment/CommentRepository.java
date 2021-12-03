@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Iterable<Comment> findByMember(Member member, Sort sort);
-    Iterable<Comment> findByPostId(Long post_id, Sort sort);
+    Iterable<Comment> findAllByPostId(Long post_id, Sort sort);
 }

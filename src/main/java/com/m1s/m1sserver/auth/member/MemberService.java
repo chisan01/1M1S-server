@@ -40,11 +40,10 @@ public class MemberService {
 
 
 
-    public void setPassword(Member member, String oldPassword, String newPassword){
-        //TODO refcell22 - 여기도 바꿔
-        if(passwordEncoder.matches(newPassword,oldPassword)) throw new CustomException(ErrorCode.DUPLICATE_PASSWORD);
-        member.setPassword(passwordEncoder.encode(newPassword));
-        memberRepository.save(member);
+    public Member setPassword(Member me, String newPassword){
+        if(passwordEncoder.matches(newPassword,me.getPassword())) throw new CustomException(ErrorCode.DUPLICATE_PASSWORD);
+        me.setPassword(passwordEncoder.encode(newPassword));
+        return memberRepository.save(me);
     }
 
     //refcell22 - 여기서 받은 비밀번호는 encoded가 아니라 평문 패스워드다..

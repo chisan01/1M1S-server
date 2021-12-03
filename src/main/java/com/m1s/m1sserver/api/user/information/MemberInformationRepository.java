@@ -9,6 +9,6 @@ public interface MemberInformationRepository extends JpaRepository<MemberInforma
     MemberInformation findByMember(Member member);
     boolean existsByEmail(String email);
     boolean existsByMember(Member member);
-
+    boolean existsByNickname(String nickname);
     boolean existsByPhone(String phone);
 }

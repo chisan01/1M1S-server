@@ -27,6 +27,8 @@ public class MemberInformationService {
         if(memberInformation.getName().equals(""))throw new CustomException(ErrorCode.NO_USERNAME);
         if(memberInformationRepository.existsByEmail(memberInformation.getEmail()))
             throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
+        if(memberInformationRepository.existsByNickname(memberInformation.getNickname()))
+            throw new CustomException(ErrorCode.DUPLICATE_NICKNAME);
         if(memberInformation.getMember().getUsername().equals(""))
             throw new CustomException(ErrorCode.NO_USERNAME);
         if(memberInformation.getMember().getPassword().equals(""))
