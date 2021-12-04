@@ -6,6 +6,7 @@ import com.m1s.m1sserver.api.group.PartyService;
 import com.m1s.m1sserver.api.group.member.PartyMember;
 import com.m1s.m1sserver.api.group.member.PartyMemberService;
 import com.m1s.m1sserver.api.interest.InterestService;
+import com.m1s.m1sserver.api.post.comment.CommentService;
 import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.utils.CustomException;
 import com.m1s.m1sserver.utils.ErrorCode;
@@ -25,6 +26,8 @@ public class PostService {
 
     @Autowired
     private PartyService partyService;
+    @Autowired
+    private CommentService commentService;
 
 
     @Autowired
@@ -81,6 +84,7 @@ public class PostService {
 
     public void deletePost(Member me, Post post){
         checkOwner(me, post);
+        commentService.deleteComment(post);
         postRepository.deleteById(post.getId());
     }
 }
