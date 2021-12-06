@@ -62,6 +62,14 @@ public class CommentService {
         commentRepository.deleteById(comment_id);
     }
 
+    // 게시글 댓글 일괄 삭제
+    public void deleteComment(Post post) {
+        Iterable<Comment> C = getComments(post.getId());
+        for(Comment c : C) {
+            deleteComment(c.getId());
+        }
+    }
+
     public Comment createComment(Member member, Post post, Comment comment){
         return save(Comment.builder()
                 .member(member)
