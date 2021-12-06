@@ -57,6 +57,7 @@ public class UserPostController {
     public Post deletePost(Authentication authentication, @PathVariable Long post_id) {
         Member me = authService.getMe(authentication);
         Post targetPost = postService.getPost(post_id);
+        postService.deletePost(me, targetPost);
         return targetPost;
     }
 }
