@@ -29,6 +29,8 @@ public class PostService {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private InterestService interestService;
@@ -41,7 +43,7 @@ public class PostService {
 
     public Post editPost(Member member, Post oldPost, Post newPost){
         checkOwner(member, oldPost);
-        if(newPost.getInterest() != null) oldPost.setInterest(newPost.getInterest());
+        System.out.println("asd");
         if(newPost.getTitle() != null) oldPost.setTitle(newPost.getTitle());
         if(newPost.getContent() != null) oldPost.setContent(newPost.getContent());
         return save(oldPost);
@@ -84,7 +86,7 @@ public class PostService {
 
     public void deletePost(Member me, Post post){
         checkOwner(me, post);
-        commentService.deleteComment(post);
-        postRepository.deleteById(post.getId());
+        commentService.deleteComments(post);
+        postRepository.delete(post);
     }
 }

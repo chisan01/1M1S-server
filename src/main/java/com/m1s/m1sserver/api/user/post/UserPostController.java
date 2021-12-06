@@ -56,8 +56,8 @@ public class UserPostController {
     @DeleteMapping("/{post_id}")
     public Post deletePost(Authentication authentication, @PathVariable Long post_id) {
         Member me = authService.getMe(authentication);
-        Post delPost = postService.getPost(post_id);
-        postService.deletePost(me, delPost);
-        return delPost;
+        Post targetPost = postService.getPost(post_id);
+        postService.deletePost(me, targetPost);
+        return targetPost;
     }
 }

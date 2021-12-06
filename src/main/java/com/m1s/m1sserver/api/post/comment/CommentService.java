@@ -55,7 +55,9 @@ public class CommentService {
         checkOwner(member, comment);
         deleteComment(comment.getId());
     }
-
+    public void deleteComments(Post post){
+        commentRepository.deleteAllByPost(post);
+    }
     public void deleteComment(Long comment_id){
         commentRepository.deleteById(comment_id);
     }

@@ -3,6 +3,8 @@ package com.m1s.m1sserver.auth.JWT;
 import com.m1s.m1sserver.auth.member.Member;
 import com.m1s.m1sserver.auth.member.MemberService;
 import com.m1s.m1sserver.auth.refresh_token.RefreshTokenService;
+import com.m1s.m1sserver.utils.CustomException;
+import com.m1s.m1sserver.utils.ErrorCode;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,16 +83,20 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         Member member = memberService.getMember(member_id);
 
         //리프레시토큰이 헤더에 있는 경우에만 토큰 갱신 처리
-        //TODO 알아서 처리할것, 이부분은 구현안함
 
 
         //토큰이 있다면 적절한 토큰인지 확인하고, 적절하다면 권한 인정, 적절하지 않을경우 권한없음으로 통과
-        Jws<Claims> claims = authenticationTokenProvider.parseToken(xAccessToken, JwtAuthenticationTokenProvider.getACCESS_PRIVATE_KEY());
+        Jws<Claims> claims;
+        try {
+            claims = authenticationTokenProvider.parseToken(xAccessToken, JwtAuthenticationTokenProvider.getACCESS_PRIVATE_KEY());
+        }catch (Exception e){
+            throw new CustomException(ErrorCode.INVALID_TOKEN);
+        }
+
 
         if(claims == null){
             //잘못된 토큰일경우 필터를 권한없이 통과
-            filter.doFilter(request,response);
-            return;
+            throw new CustomException(ErrorCode.INVALID_TOKEN);
         }
         //이미 로그인된상태로 토큰이 적절한경우 토큰을 Authentication으로 변환하여 스프링 시큐리티에 전달, 이후 권한검사는 스프링시큐리티가 알아서함
         SecurityContextHolder.getContext().setAuthentication(new JwtAuthentication(claims));
