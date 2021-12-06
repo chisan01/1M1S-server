@@ -35,7 +35,7 @@ public class PostService {
     public Post createPost(Member member, Post newPost){
         newPost.setMember(member);
         newPost.setWritingDate(LocalDateTime.now());
-        newPost.setInterest(interestService.getInterest(newPost.getInterest().getSubject()));
+        newPost.setInterest(interestService.getInterest(newPost.getInterest().getId()));
         return save(newPost);
     }
 
